@@ -1,5 +1,5 @@
 let accessKey = process.env.AWS_ACCESS_KEY_ID;
-let accessSecret = process.env.AWS_SECERT_ACCESS_KEY;
+let accessSecret = process.env.AWS_SECRET_ACCESS_KEY;
 const amazonMws = require("amazon-mws")(accessKey, accessSecret);
 
 let isbnLookUp = async (req, res) => {

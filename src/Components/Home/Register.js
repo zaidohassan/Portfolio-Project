@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
+import "./Register.css";
 
-export default class Home extends Component {
+export default class Register extends Component {
   constructor() {
     super();
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      email: ""
     };
   }
 
@@ -24,15 +26,16 @@ export default class Home extends Component {
           <div className="container">
             <div className="login-form">
               <div className="tabs">
-                <h1> Sign in</h1>
-                <Link to="/Register">
-                  <h1> Sign Up</h1>
+                <Link to="/">
+                  <h1> Sign in</h1>
                 </Link>
+                <h1> Sign Up</h1>
               </div>
               <form>
                 <input type="text" name="" placeholder="Username" />
                 <input type="password" name="" placeholder="Password" />
-                <button> LogIn</button>
+                <input type="text" name="" placeholder="Email" />
+                <button> Register</button>
               </form>
             </div>
           </div>
