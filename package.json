@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://localhost:3005",
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
     "amazon-mws": "0.0.23",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
