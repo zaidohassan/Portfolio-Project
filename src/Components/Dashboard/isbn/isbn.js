@@ -6,21 +6,20 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import green from "@material-ui/core/colors/green";
+import DataLayout from "../DataLayout/DataLayout";
 
 const styles = theme => ({
   container: {
     display: "flex",
     flexWrap: "wrap"
-  },
-  input: {
-    margin: theme.spacing.unit
   }
 });
 
 const theme = createMuiTheme({
   palette: {
-    primary: green
+    primary: {
+      main: "#ff5722"
+    }
   },
   typography: { useNextVariants: true }
 });
@@ -30,7 +29,8 @@ class Isbn extends Component {
     super();
     this.state = {
       isbn: "",
-      data: []
+      book: [],
+      errorIsbn: false
     };
   }
 
@@ -44,39 +44,49 @@ class Isbn extends Component {
   }
 
   handleClick() {
-    axios.get(`/api/dashboard/${this.state.isbn}`).then(response => {
-      console.log(response.data);
+    axios
+      .get(`/api/dashboard/${this.state.isbn}`)
+      .then(response => {
+        console.log(response.data);
 
-      this.setState({ data: response.data });
-      this.setState({ isbn: " " });
-    });
+        this.setState({ book: response.data });
+        this.setState({ isbn: " " });
+        this.setState({ errorIsbn: false });
+      })
+      .catch(err => this.setState({ errorIsbn: true }));
   }
 
   render() {
     const { classes } = this.props;
     return (
-      <div className="isbn_container">
-        <div className="sub_isbn_container">
-          <div className="isbn">
-            <MuiThemeProvider theme={theme}>
-              <TextField
-                className={classes.margin}
-                label="MuiThemeProvider"
-                id="mui-theme-provider-standard-input"
-                value={this.state.isbn}
-                onChange={e => this.handleChange(e.target.value)}
-                required
-              />
-            </MuiThemeProvider>
-            <Button
-              variant="outlined"
-              className={classes.button}
-              onClick={() => this.handleClick()}
-            >
-              GO
-            </Button>
+      <div>
+        <div className="isbn_container">
+          <div className="sub_isbn_container">
+            <div className="isbn">
+              <MuiThemeProvider theme={theme}>
+                <TextField
+                  className={classes.margin}
+                  label="ISBN"
+                  // id="mui-theme-provider-standard-input"
+                  value={this.state.isbn}
+                  onChange={e => this.handleChange(e.target.value)}
+                  hintText="Hint Text"
+                  errorText="This field is required"
+                  error={this.state.errorIsbn}
+                  helperText={this.state.errorIsbn ? "Invalid ISBN" : " "}
+                />
+              </MuiThemeProvider>
+              <Button
+                variant="outlined"
+                className={classes.button}
+                onClick={() => this.handleClick()}
+              >
+                GO
+              </Button>
+            </div>
           </div>
         </div>
+        <DataLayout data={this.state.book} />
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./middle.css";
+import "./DataLayout.css";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -8,6 +8,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
+import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
+import DateFnsUtils from "@date-io/date-fns";
+import "date-fns";
+// import CardMedia from "@material-ui/core/CardMedia";
 
 const styles = theme => ({
   root: {
@@ -34,32 +38,49 @@ const styles = theme => ({
       display: "flex",
       flexDirection: "column"
     }
+  },
+  media: {
+    height: 0,
+    paddingTop: "56.25%" // 16:9
   }
 });
 
-class Middle extends Component {
+class DataLayout extends Component {
   constructor() {
     super();
+    this.state = {
+      selectedDate: new Date()
+    };
   }
+
+  handleDateChange = date => {
+    this.setState({ selectedDate: date });
+  };
+
   render() {
     const { classes } = this.props;
+    const { selectedDate } = this.state;
+    const {
+      title,
+      binding,
+      salesRank,
+      usedBuyBoxPrice,
+      imageURL
+    } = this.props.data;
+
     return (
       <div className={classes.root}>
         <div className={classes.inputs}>
-          <Input
-            placeholder="Input Price"
-            className={classes.input}
-            inputProps={{
-              "aria-label": "Description"
-            }}
-          />
-          <Input
-            placeholder="Cost of Good"
-            className={classes.input}
-            inputProps={{
-              "aria-label": "Description"
-            }}
-          />
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <DatePicker
+              margin="normal"
+              label="Date picker"
+              value={selectedDate}
+              onChange={this.handleDateChange}
+            />
+          </MuiPickersUtilsProvider>
+          <Input placeholder="Input Price" className={classes.input} />
+          <Input placeholder="Cost of Good" className={classes.input} />
           <Button variant="outlined" className={classes.button}>
             GO
           </Button>
@@ -69,29 +90,56 @@ class Middle extends Component {
             <ListItem>
               <ListItemText
                 primary="Title"
-                secondary="Heat and Mass Transfer"
+                secondary={title ? title : "Title"}
               />
             </ListItem>
-            <li>
-              <Divider variant="Title" />
-            </li>
-            <ListItem>
-              <ListItemText primary="Image" secondary="Image Goes Here" />
-            </ListItem>
-            <Divider variant="Title" component="li" />
+
+            <Divider variant="Title" />
 
             <ListItem>
-              <ListItemText primary="Binding" secondary="Hardcover" />
+              {" "}
+              <ListItemText
+                primary="Image"
+                secondary={
+                  imageURL ? <img src={imageURL} alt="Book Cover" /> : "Image"
+                }
+                className={classes.listitemtext}
+              />
+              {/* <CardMedia
+                className={classes.media}
+                image={imageURL}
+                title="Paella dish"
+              /> */}
+            </ListItem>
+            <Divider
+              variant="Title"
+              component="li"
+              className={classes.dividers}
+            />
+
+            <ListItem>
+              <ListItemText
+                primary="Binding"
+                secondary={binding ? binding : "Binding"}
+              />
             </ListItem>
             <Divider variant="Title" component="li" />
           </div>
           <div className={classes.divs}>
             <ListItem>
-              <ListItemText primary="Used BuyBox Price" secondary="$50.60" />
+              <ListItemText
+                primary="Used BuyBox Price"
+                secondary={
+                  usedBuyBoxPrice ? usedBuyBoxPrice : "Competitive BuyBox Price"
+                }
+              />
             </ListItem>
             <Divider variant="Title" component="li" />
             <ListItem>
-              <ListItemText primary="Sales Rank" secondary="350,000" />
+              <ListItemText
+                primary="Sales Rank"
+                secondary={salesRank ? salesRank : "Sales Rank"}
+              />
             </ListItem>
             <Divider variant="Title" component="li" />
           </div>
@@ -120,8 +168,8 @@ class Middle extends Component {
   }
 }
 
-Middle.propTypes = {
+DataLayout.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Middle);
+export default withStyles(styles)(DataLayout);

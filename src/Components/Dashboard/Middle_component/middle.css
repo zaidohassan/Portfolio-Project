@@ -1,7 +1,0 @@
-@media (max-width: 600px) {
-  .list {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-}

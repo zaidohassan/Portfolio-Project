@@ -1,8 +1,12 @@
-import React, { Component } from "react";
-// import axios from "axios";
+import React from "react";
+import Header from "../Dashboard/Header/Header";
 
-export default class InventoryList extends Component {
-  render() {
-    return <div>Hello</div>;
-  }
-}
+const Inventory = () => {
+  return (
+    <div>
+      <Header />
+    </div>
+  );
+};
+
+export default Inventory;
