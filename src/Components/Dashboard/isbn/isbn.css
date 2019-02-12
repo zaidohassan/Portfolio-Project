@@ -1,0 +1,11 @@
+.isbn_container {
+  display: flex;
+  justify-content: center;
+  margin-top: 0%;
+  width: 10w;
+}
+
+.isbn {
+  text-align: center;
+  padding: 20px;
+}

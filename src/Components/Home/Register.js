@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
 import "./Register.css";
+import axios from "axios";
 
 export default class Register extends Component {
   constructor() {
@@ -13,11 +14,32 @@ export default class Register extends Component {
     };
   }
 
+  updateInput = e => {
+    console.log(e.target.value);
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  register = e => {
+    e.preventDefault();
+    const { username, password, email } = this.state;
+    axios
+      .post("/auth/register", { username, password, email })
+      .then(register => {
+        console.log(register.data);
+
+        this.setState({
+          username: "",
+          password: "",
+          email: ""
+        });
+      });
+  };
   render() {
+    const { username, password, email } = this.state;
     return (
       <div className="entireapp">
         <div className="aside">
-          <div>
+          <div className="textaside">
             <p> Welcome to Bookers</p>
             <p> Your Revolutionized BookSelling App</p>
           </div>
@@ -31,11 +53,32 @@ export default class Register extends Component {
                 </Link>
                 <h1> Sign Up</h1>
               </div>
-              <form>
-                <input type="text" name="" placeholder="Username" />
-                <input type="password" name="" placeholder="Password" />
-                <input type="text" name="" placeholder="Email" />
-                <button> Register</button>
+              <form onSubmit={this.register}>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  value={username}
+                  onChange={this.updateInput}
+                  required
+                />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={this.updateInput}
+                  required
+                />
+                <input
+                  type="text"
+                  name="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={this.updateInput}
+                  required
+                />
+                <input type="submit" className="loginbutton" />
               </form>
             </div>
           </div>

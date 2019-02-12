@@ -18,6 +18,18 @@ section {
   left: 50%;
 }
 
+.textaside {
+  font-family: "Rock Salt", cursive;
+  text-align: center;
+  color: rgba(255, 255, 255, 15);
+  position: absolute;
+  top: 40%;
+  left: 5%;
+  font-size: 20px;
+  background: #ff5722;
+  width: 30vw;
+}
+
 .container {
   position: absolute;
   top: 50%;
@@ -46,7 +58,7 @@ section {
 }
 
 .login-form input,
-button {
+.loginbutton {
   display: block;
   width: 100%;
   padding: 10px 20px;
@@ -59,7 +71,7 @@ button {
   border: none;
 }
 
-.login-form button {
+.loginbutton {
   text-transform: uppercase;
   color: #ff9800;
   font-size: 16px;
@@ -69,7 +81,7 @@ button {
   background: #3300ff;
 }
 
-.login-form button:hover {
+.loginbutton:hover {
   background: #22fff8;
   color: #3300ff;
 }
@@ -109,11 +121,22 @@ a {
     left: 50%;
     top: 65%;
   }
+  .textaside {
+    top: 2%;
+  }
 }
 
 @media (min-width: 1000px) and (max-width: 1200px) {
   .container {
     left: 70%;
     top: 35%;
+  }
+  .textaside {
+    top: 30%;
+    left: 1%;
+  }
+  section {
+    width: 50vw;
+    height: 100vh;
   }
 }
