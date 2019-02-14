@@ -24,6 +24,7 @@ let isbnLookUp = async (req, res) => {
         let imageURL = "";
         let salesRank = "";
         let title = "";
+        let dims = {};
         let withArray = response.Products.Product[0];
         let noArray = response.Products.Product;
 
@@ -33,12 +34,58 @@ let isbnLookUp = async (req, res) => {
           imageURL = withArray.AttributeSets.ItemAttributes.SmallImage.URL;
           salesRank = withArray.SalesRankings.SalesRank[0].Rank;
           title = withArray.AttributeSets.ItemAttributes.Title;
+          dims = {
+            height:
+              Math.round(
+                withArray.AttributeSets.ItemAttributes.PackageDimensions.Height
+                  .Value * 100
+              ) / 100,
+
+            length:
+              Math.round(
+                withArray.AttributeSets.ItemAttributes.PackageDimensions.Length
+                  .Value * 100
+              ) / 100,
+            width:
+              Math.round(
+                withArray.AttributeSets.ItemAttributes.PackageDimensions.Width
+                  .Value * 100
+              ) / 100,
+            weight:
+              Math.round(
+                withArray.AttributeSets.ItemAttributes.PackageDimensions.Weight
+                  .Value * 100
+              ) / 100
+          };
         } else {
           ASIN = noArray.Identifiers.MarketplaceASIN.ASIN;
           binding = noArray.AttributeSets.ItemAttributes.Binding;
           imageURL = noArray.AttributeSets.ItemAttributes.SmallImage.URL;
           salesRank = noArray.SalesRankings.SalesRank[0].Rank;
           title = noArray.AttributeSets.ItemAttributes.Title;
+          dims = {
+            height:
+              Math.round(
+                noArray.AttributeSets.ItemAttributes.PackageDimensions.Height
+                  .Value * 100
+              ) / 100,
+
+            length:
+              Math.round(
+                noArray.AttributeSets.ItemAttributes.PackageDimensions.Length
+                  .Value * 100
+              ) / 100,
+            width:
+              Math.round(
+                noArray.AttributeSets.ItemAttributes.PackageDimensions.Width
+                  .Value * 100
+              ) / 100,
+            weight:
+              Math.round(
+                noArray.AttributeSets.ItemAttributes.PackageDimensions.Weight
+                  .Value * 100
+              ) / 100
+          };
         }
         amazonMws.products.searchFor(
           {
@@ -75,7 +122,9 @@ let isbnLookUp = async (req, res) => {
               imageURL,
               salesRank,
               title,
-              usedBuyBoxPrice
+              usedBuyBoxPrice,
+              ASIN,
+              dims
             });
           }
         );

@@ -24,7 +24,8 @@ const styles = {
   button: {
     textAlign: "center",
     border: "1px solid black",
-    marginTop: 10
+    marginTop: 10,
+    margin: "0 auto"
   }
 };
 class Header extends Component {
@@ -50,14 +51,14 @@ class Header extends Component {
             (text, index) => (
               <Link component={RouterLink} to={`/${text}`}>
                 <ListItem button key={text}>
-                  {/* <ListItemIcon> */}
-                  {/* {index % 2 === 0 ? "Hello" : "Hello"} */}
-                  {/* </ListItemIcon> */}
                   <ListItemText className={classes.text} primary={text} />
                 </ListItem>
               </Link>
             )
           )}
+          <ListItem button>
+            <ListItemText className={classes.text} primary="Logout" />
+          </ListItem>
         </List>
       </div>
     );

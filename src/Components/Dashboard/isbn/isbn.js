@@ -1,3 +1,4 @@
+import "date-fns";
 import React, { Component } from "react";
 import axios from "axios";
 import "./isbn.css";
@@ -7,11 +8,25 @@ import Button from "@material-ui/core/Button";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import DataLayout from "../DataLayout/DataLayout";
+import DateFnsUtils from "@date-io/date-fns";
+import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
 
 const styles = theme => ({
   container: {
     display: "flex",
     flexWrap: "wrap"
+  },
+  margin: {
+    margin: "0 auto"
+  },
+  button: {
+    marginTop: 10
+  },
+  calendar: {
+    margin: "0 auto",
+    display: "flex",
+    flexDirection: "column",
+    display: "none"
   }
 });
 
@@ -30,7 +45,9 @@ class Isbn extends Component {
     this.state = {
       isbn: "",
       book: [],
-      errorIsbn: false
+      errorIsbn: false,
+      allowInputPrice: false,
+      selectedDate: this.handleDateChange(new Date())
     };
   }
 
@@ -43,50 +60,74 @@ class Isbn extends Component {
     console.log(val);
   }
 
-  handleClick() {
+  handleClick = () => {
     axios
       .get(`/api/dashboard/${this.state.isbn}`)
       .then(response => {
-        console.log(response.data);
-
-        this.setState({ book: response.data });
-        this.setState({ isbn: " " });
-        this.setState({ errorIsbn: false });
+        // console.log(response.data);
+        this.setState({
+          book: response.data,
+          isbn: " ",
+          allowInputPrice: true
+        });
       })
       .catch(err => this.setState({ errorIsbn: true }));
-  }
+  };
+
+  handleDateChange = date => {
+    if (date) {
+      const newDate =
+        date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+      return newDate;
+    }
+  };
 
   render() {
     const { classes } = this.props;
     return (
       <div>
         <div className="isbn_container">
-          <div className="sub_isbn_container">
-            <div className="isbn">
-              <MuiThemeProvider theme={theme}>
+          <MuiThemeProvider theme={theme}>
+            <div className={classes.calendar}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <DatePicker
+                  margin="normal"
+                  label="Today's Date"
+                  onChange={this.handleDateChange}
+                  disableFuture={true}
+                />
+              </MuiPickersUtilsProvider>
+            </div>
+            <div className="sub_isbn_container">
+              <div className="isbn">
                 <TextField
                   className={classes.margin}
                   label="ISBN"
                   // id="mui-theme-provider-standard-input"
                   value={this.state.isbn}
                   onChange={e => this.handleChange(e.target.value)}
-                  hintText="Hint Text"
-                  errorText="This field is required"
                   error={this.state.errorIsbn}
                   helperText={this.state.errorIsbn ? "Invalid ISBN" : " "}
+                  autoFocus={true}
                 />
-              </MuiThemeProvider>
-              <Button
-                variant="outlined"
-                className={classes.button}
-                onClick={() => this.handleClick()}
-              >
-                GO
-              </Button>
+                <Button
+                  color="primary"
+                  size="small"
+                  variant="contained"
+                  className={classes.button}
+                  onClick={() => this.handleClick()}
+                >
+                  GO
+                </Button>
+              </div>
             </div>
-          </div>
+          </MuiThemeProvider>
         </div>
-        <DataLayout data={this.state.book} />
+        <DataLayout
+          data={this.state.book}
+          allowedInput={this.state}
+          isbn={this.state}
+        />
       </div>
     );
   }
