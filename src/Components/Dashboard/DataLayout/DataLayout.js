@@ -45,6 +45,11 @@ const styles = theme => ({
   input: {
     marginRight: 10
   },
+  listtext: {
+    secondary: {
+      textAlign: "left"
+    }
+  },
   [theme.breakpoints.down("sm")]: {
     list: {
       display: "flex",
@@ -62,6 +67,12 @@ const styles = theme => ({
       width: 350,
       display: "flex",
       flexDirection: "column"
+    },
+    listtexttitle: {
+      marginRight: 100
+    },
+    p: {
+      textAlign: "left"
     }
   }
 });
@@ -79,65 +90,12 @@ const theme = createMuiTheme({
 });
 
 class DataLayout extends Component {
-  constructor() {
-    super();
-    this.state = {
-      inputPrice: "",
-      costOfGood: 0,
-      totalFbaFee: 0,
-      profitFBA: 0,
-      mfFees: 0,
-      mfProfit: 0
-    };
-  }
-
   // 9780073398181
   // 9780133887518
-
-  handleInputPrice = val => {
-    // const index = val.findIndex(".");
-    // console.log(index);
-
-    this.setState({ inputPrice: val });
-  };
-
-  handleCostofGood = val => {
-    this.setState({ costOfGood: val });
-  };
-
-  getFees = () => {
-    if (this.props.allowedInput.allowInputPrice) {
-      console.log(this.props);
-
-      const { inputPrice, costOfGood } = this.state;
-      const { height, width, length, weight } = this.props.data.dims;
-      const cubicFoot = (height * width * length) / 1728;
-      const small = cubicFoot < 135; // amazon categories products by weight and cubic feet to calculate fee
-      const large = cubicFoot > 136;
-      let fixedFee = Math.round((inputPrice * 0.15 + 1.8) * 100) / 100;
-      let fbaFee = Math.round(fbaFee * 100) / 100;
-
-      if (small && weight < 1) {
-        fbaFee = fixedFee + 2.41;
-      } else if (large && weight < 1) {
-        fbaFee = fixedFee + 3.19;
-      } else if (large && weight > 1 && weight < 2) {
-        fbaFee = fixedFee + 4.71;
-      } else {
-        fbaFee = fixedFee + 4.71 + (weight - 2 * 0.38);
-      }
-      this.setState({
-        totalFbaFee: fbaFee.toFixed(2),
-        profitFBA: (inputPrice - fbaFee - costOfGood).toFixed(2),
-        mfFees: fixedFee,
-        mfProfit: (inputPrice - fixedFee - costOfGood).toFixed(2),
-        inputPrice: ""
-      });
-    }
-  };
+  //  9780439136358
 
   render() {
-    const { classes, isbn } = this.props;
+    const { classes, isbn, reject, handleAdd } = this.props;
     const {
       title,
       binding,
@@ -145,12 +103,11 @@ class DataLayout extends Component {
       usedBuyBoxPrice,
       imageURL
     } = this.props.data;
-    const { mfFees, mfProfit, profitFBA, totalFbaFee, inputPrice } = this.state;
 
     return (
       <div className={classes.root}>
         <div className={classes.actionbutton}>
-          <Buttons layout={this.state} isbn={isbn} />
+          <Buttons isbn={isbn} reject={reject} handleAdd={handleAdd} />
         </div>
         <Card className={classes.card}>
           <CardContent className={classes.cards}>
@@ -159,26 +116,27 @@ class DataLayout extends Component {
                 placeholder="Input Price"
                 className={classes.input}
                 onChange={e => {
-                  this.handleInputPrice(e.target.value);
+                  this.props.handleInputPrice(e.target.value);
                 }}
-                value={this.state.inputPrice}
+                value={this.props.isbn.inputPrice}
                 color="primary"
               />
               <Input
                 placeholder="Cost of Good"
                 className={classes.input}
                 onChange={e => {
-                  this.handleCostofGood(e.target.value);
+                  this.props.handleCostofGood(e.target.value);
                 }}
                 color="primary"
+                // value={this.props.isbn.costOfGood}  // the COGs should stay because usually with suppliers they are set on the same price
               />
               <Button
                 variant="contained"
                 size="small"
                 className={classes.button}
                 onClick={() => {
-                  if (inputPrice) {
-                    this.getFees();
+                  if (isbn.inputPrice) {
+                    this.props.getFees();
                   }
                 }}
                 color="primary"
@@ -189,9 +147,8 @@ class DataLayout extends Component {
             <MuiThemeProvider theme={theme}>
               <List className={classes.list}>
                 <div className={classes.divs}>
-                  <ListItem>
+                  <ListItem className={classes.list}>
                     <ListItemText
-                      className={classes.listtext}
                       primary="Title"
                       secondary={title ? title : "Title"}
                     />
@@ -246,14 +203,14 @@ class DataLayout extends Component {
                   <ListItem className={classes.list}>
                     <ListItemText
                       primary="Total FBA Fees"
-                      secondary={totalFbaFee ? totalFbaFee : null}
+                      secondary={isbn.totalFbaFee ? isbn.totalFbaFee : null}
                     />
                   </ListItem>
                   <Divider variant="Title" component="li" />
                   <ListItem className={classes.list}>
                     <ListItemText
                       primary="Profit FBA"
-                      secondary={profitFBA ? profitFBA : null}
+                      secondary={isbn.profitFBA ? isbn.profitFBA : null}
                     />
                   </ListItem>
                   <Divider variant="Title" component="li" />
@@ -262,14 +219,14 @@ class DataLayout extends Component {
                   <ListItem className={classes.list}>
                     <ListItemText
                       primary="Total MF Fees"
-                      secondary={mfFees ? mfFees : null}
+                      secondary={isbn.mfFees ? isbn.mfFees : null}
                     />
                   </ListItem>
                   <Divider variant="Title" component="li" />
                   <ListItem>
                     <ListItemText
                       primary="Total MF Profit"
-                      secondary={mfProfit ? mfProfit : null}
+                      secondary={isbn.mfProfit ? isbn.mfProfit : null}
                     />
                   </ListItem>
                   <Divider variant="Title" component="li" />

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Home.css";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default class Home extends Component {
@@ -24,24 +24,37 @@ export default class Home extends Component {
     const { username, password } = this.state;
     axios
       .post("/auth/login", { username, password })
-      .then(user => {
-        toast("Default Notification !");
-        toast.success("Success Notification !", {
-          position: toast.POSITION.TOP_CENTER
-        });
+      .then(res => {
         this.props.history.push("/Dashboard");
         this.setState({
           username: "",
           password: ""
         });
       })
-      .catch(error => alert(error.response.request.response));
+      .catch(error => {
+        toast.error("Failed Login", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+          closeOnClick: true
+        });
+      });
   };
 
   render() {
     const { username, password } = this.state;
     return (
       <div className="entireapp">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+        />
         <div className="aside">
           <div className="textaside">
             <p> Welcome to Bookers</p>

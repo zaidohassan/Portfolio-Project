@@ -10,6 +10,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Link as RouterLink } from "react-router-dom";
 import Link from "@material-ui/core/Link";
+import { withRouter } from "react-router";
+import axios from "axios";
 
 const styles = {
   list: {
@@ -29,8 +31,8 @@ const styles = {
   }
 };
 class Header extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       top: false
     };
@@ -40,6 +42,17 @@ class Header extends Component {
     this.setState({
       [side]: open
     });
+  };
+
+  logout = () => {
+    // axios GET to /auth/logout here
+    axios
+      .get("/auth/logout")
+      .then(res => {
+        console.log(res);
+        this.props.history.push("/");
+      })
+      .catch(err => console.log("Error", err));
   };
 
   render() {
@@ -57,7 +70,11 @@ class Header extends Component {
             )
           )}
           <ListItem button>
-            <ListItemText className={classes.text} primary="Logout" />
+            <ListItemText
+              className={classes.text}
+              onClick={this.logout}
+              primary="Logout"
+            />
           </ListItem>
         </List>
       </div>
@@ -94,4 +111,4 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Header);
+export default withRouter(withStyles(styles)(Header));

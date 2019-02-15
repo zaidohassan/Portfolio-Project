@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import "./App.css";
-import { HashRouter as Router } from "react-router-dom";
-
+import { BrowserRouter as Router } from "react-router-dom";
+import { Provider } from "react-redux";
 import routes from "./routes";
+import store from "../src/Components/ducks/store";
 
 class App extends Component {
   render() {
     return (
-      <Router>
-        <div className="App">{routes}</div>
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <div className="App">{routes}</div>
+        </Router>
+      </Provider>
     );
   }
 }

@@ -29,6 +29,23 @@ module.exports = {
   },
   logout: (req, res) => {
     req.session.destroy();
-    return res.sendStatus(200);
+    return res.status(200).json("You have been logged out");
+  },
+
+  verifyLogin: async (req, res) => {
+    try {
+      const db = req.app.get("db");
+      if (req.session.user) {
+        const user = await db.get_user(req.session.user.username);
+        console.log(user);
+        return res.status(200).json(user);
+      } else {
+        console.log(err);
+        res.status(404).json("Not logged in");
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(500).json("Not logged in");
+    }
   }
 };

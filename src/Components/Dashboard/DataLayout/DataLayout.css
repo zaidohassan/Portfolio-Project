@@ -5,3 +5,7 @@ img {
   flex-direction: column;
   justify-content: flex-start;
 }
+
+p {
+  text-align: left;
+}

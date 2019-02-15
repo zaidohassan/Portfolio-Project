@@ -6,8 +6,17 @@ const massive = require("massive");
 const session = require("express-session");
 const { isbnLookUp } = require("./controllers/getBookInfo/getBookInfo");
 const { addBook } = require("./controllers/db_controllers/addBook");
+const {
+  getBooks,
+  didMount
+} = require("./controllers/db_controllers/getBookbyDate");
 const { register } = require("./controllers/userControllers/register");
-const { login, logout } = require("./controllers/userControllers/login");
+const {
+  login,
+  logout,
+  verifyLogin
+} = require("./controllers/userControllers/login");
+const { deleteBook } = require("./controllers/db_controllers/deleteBook");
 
 app.use(json());
 const port = 3005;
@@ -30,10 +39,22 @@ massive(CONNECTION_STRING).then(dbInstance => {
   console.log("Database is Connected");
 });
 
+// Get Isbn when inputted or add a book when accepted
 app.get("/api/dashboard/:id", isbnLookUp);
 app.post("/api/addBook", addBook);
 
+// Inventory
+
+app.post("/api/getTodaysBooks", didMount);
+app.post("/api/getBook", getBooks);
+app.delete("/api/deleteInventory/:id", deleteBook);
+
+// get User Info / Create Users
 app.post("/auth/register", register);
 app.post("/auth/login", login);
-app.get("/auth/logout", logout);
+app.get("/auth/verifylogin", verifyLogin);
 app.listen(port, () => console.log(`Listening on ${port}`));
+
+// logout
+
+app.get("/auth/logout", logout);

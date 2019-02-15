@@ -76,7 +76,6 @@ export default class Register extends Component {
                   placeholder="Email"
                   value={email}
                   onChange={this.updateInput}
-                  required
                 />
                 <input type="submit" className="loginbutton" />
               </form>
