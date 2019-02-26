@@ -17,6 +17,7 @@ const {
   verifyLogin
 } = require("./controllers/userControllers/login");
 const { deleteBook } = require("./controllers/db_controllers/deleteBook");
+const { editUser } = require("./controllers/userControllers/editUser");
 
 app.use(json());
 const port = 3005;
@@ -49,12 +50,14 @@ app.post("/api/getTodaysBooks", didMount);
 app.post("/api/getBook", getBooks);
 app.delete("/api/deleteInventory/:id", deleteBook);
 
-// get User Info / Create Users
+// get User Info / Create Users / Edit Users
 app.post("/auth/register", register);
 app.post("/auth/login", login);
 app.get("/auth/verifylogin", verifyLogin);
-app.listen(port, () => console.log(`Listening on ${port}`));
+app.put("/auth/editUser/:id", editUser);
 
 // logout
 
 app.get("/auth/logout", logout);
+
+app.listen(port, () => console.log(`Listening on ${port}`));

@@ -6,7 +6,11 @@ import AddIcon from "@material-ui/icons/Add";
 
 const styles = theme => ({
   fab: {
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit * 3,
+    background: "#E82C0C",
+    "&:hover": {
+      backgroundColor: "#1e81ce"
+    }
   },
   extendedIcon: {
     marginRight: theme.spacing.unit
@@ -14,8 +18,12 @@ const styles = theme => ({
   button: {
     margin: "0 auto"
   },
+  addButton: {
+    color: "#ffffff"
+  },
   xbutton: {
-    transform: "rotate(45deg)"
+    transform: "rotate(45deg)",
+    color: "#ffffff"
   }
 });
 
@@ -26,15 +34,13 @@ class Buttons extends Component {
     return (
       <div>
         <Fab
-          color="primary"
           aria-label="Add"
           className={classes.fab}
           onClick={this.props.handleAdd}
         >
-          <AddIcon />
+          <AddIcon className={classes.addButton} />
         </Fab>
         <Fab
-          color="primary"
           aria-label="Add"
           className={classes.fab}
           onClick={this.props.reject}

@@ -1,4 +1,11 @@
 .components {
   margin: 0 auto;
-  /* width: 100px; */
+  background: rgb(224, 224, 224);
+  height: 100vh;
+}
+
+@media (min-width: 1000px) {
+  .components {
+    height: 100vh;
+  }
 }

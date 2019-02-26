@@ -60,15 +60,13 @@ class Header extends Component {
     const fullList = (
       <div className={classes.fullList}>
         <List>
-          {["Dashboard", "Inventory", "Charts", "Profile"].map(
-            (text, index) => (
-              <Link component={RouterLink} to={`/${text}`}>
-                <ListItem button key={text}>
-                  <ListItemText className={classes.text} primary={text} />
-                </ListItem>
-              </Link>
-            )
-          )}
+          {["Dashboard", "Inventory", "Charts", "Profile"].map((text, i) => (
+            <Link component={RouterLink} to={`/${text}`} key={i}>
+              <ListItem button key={text}>
+                <ListItemText className={classes.text} primary={text} />
+              </ListItem>
+            </Link>
+          ))}
           <ListItem button>
             <ListItemText
               className={classes.text}

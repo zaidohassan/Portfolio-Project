@@ -1,11 +1,22 @@
-img {
-  width: 150px;
-  height: 150px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
 p {
   text-align: left;
+}
+
+#book {
+  width: 20px;
+}
+
+#bookimage {
+  width: 60px;
+  height: 60px;
+  float: right;
+  position: absolute;
+  left: 50%;
+  bottom: 10%;
+}
+
+@media (max-width: 1000px) {
+  #book {
+    display: none;
+  }
 }

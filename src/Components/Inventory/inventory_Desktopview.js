@@ -46,6 +46,9 @@ const styles = theme => ({
   },
   tablecellbutton: {
     textAlign: "center"
+  },
+  headers: {
+    borderBottom: "1px solid black"
   }
 });
 
@@ -79,7 +82,7 @@ class Desktop extends Component {
       <Paper className={classes.root}>
         <Table className={classes.table}>
           <TableHead>
-            <TableRow>
+            <TableRow className={classes.headers}>
               <TableCell className={classes.tableheaders}>Title</TableCell>
               <TableCell className={classes.tableheaders} align="right">
                 Sales Rank
@@ -102,8 +105,8 @@ class Desktop extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {display.map(book => (
-              <TableRow key={book.id}>
+            {display.map((book, i) => (
+              <TableRow key={i}>
                 <TableCell component="th" scope="row">
                   {book.title}
                 </TableCell>
@@ -133,7 +136,7 @@ class Desktop extends Component {
                       >
                         <DialogContent>
                           <DialogContentText id="alert-dialog-description">
-                            Are you sure you want to delete from your Inventory?
+                            Are you sure you want to delete from your inventory?
                           </DialogContentText>
                         </DialogContent>
                         <DialogActions>
@@ -141,7 +144,6 @@ class Desktop extends Component {
                             Cancel
                           </Button>
                           <Button
-                            onClick={this.handleClose}
                             color="primary"
                             autoFocus
                             onClick={() => this.handleDelete(book.id)}

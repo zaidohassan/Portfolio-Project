@@ -10,6 +10,8 @@ import TextField from "@material-ui/core/TextField";
 import DataLayout from "../DataLayout/DataLayout";
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const styles = theme => ({
   container: {
@@ -20,7 +22,10 @@ const styles = theme => ({
     margin: "0 auto"
   },
   button: {
-    marginTop: 10
+    marginTop: 10,
+    "&:hover": {
+      backgroundColor: "#1e81ce"
+    }
   },
   calendar: {
     margin: "0 auto",
@@ -52,14 +57,14 @@ class Isbn extends Component {
       mfProfit: "",
       errorIsbn: false,
       allowInputPrice: false,
-      toggleReject: false
+      toggleReject: false,
+      dividerToggle: false
     };
   }
 
   handleChange(val) {
     if (val.includes("-")) {
       val = val.split("-").join("");
-      this.setState({ isbn: val });
     }
     this.setState({ isbn: val });
   }
@@ -72,8 +77,10 @@ class Isbn extends Component {
           book: response.data,
           isbn: "",
           allowInputPrice: true,
-          toggleReject: true
+          toggleReject: true,
+          dividerToggle: true
         });
+        console.log(this.state.dividerToggle);
       })
       .catch(err => this.setState({ errorIsbn: true }));
   };
@@ -132,6 +139,7 @@ class Isbn extends Component {
       reset.profitFBA = "";
       reset.mfFees = "";
       reset.mfProfit = "";
+      reset.dividerToggle = !this.state.dividerToggle;
       this.setState({
         book: reset,
         inputPrice: "",
@@ -139,9 +147,11 @@ class Isbn extends Component {
         profitFBA: "",
         mfFees: "",
         mfProfit: "",
-        toggleReject: false
+        toggleReject: false,
+        dividerToggle: !this.state.dividerToggle
       });
     }
+    console.log(this.state.dividerToggle);
   };
 
   handleAdd = () => {
@@ -170,6 +180,11 @@ class Isbn extends Component {
           ASIN
         })
         .then(response => {
+          toast.success("Oh Yeahh", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1500,
+            closeOnClick: true
+          });
           this.handleReject();
         });
     }
@@ -196,7 +211,6 @@ class Isbn extends Component {
                 <TextField
                   className={classes.margin}
                   label="ISBN"
-                  // id="mui-theme-provider-standard-input"
                   value={this.state.isbn}
                   onChange={e => this.handleChange(e.target.value)}
                   error={this.state.errorIsbn}
@@ -224,6 +238,18 @@ class Isbn extends Component {
           getFees={this.getFees}
           reject={this.handleReject}
           handleAdd={this.handleAdd}
+          dividers={this.state.dividerToggle}
+        />
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
         />
       </div>
     );

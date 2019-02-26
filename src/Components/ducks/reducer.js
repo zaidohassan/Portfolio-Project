@@ -21,7 +21,8 @@ export default function userReducer(state = initialState, action) {
         ...state,
         user: {
           username: action.payload.data[0].username,
-          email: action.payload.data[0].email
+          email: action.payload.data[0].email,
+          id: action.payload.data[0].user_id
         }
       };
 

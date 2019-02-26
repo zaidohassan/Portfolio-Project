@@ -82,8 +82,12 @@ class Mobile extends Component {
               <p className={classes.typography}>
                 <strong> MF Profit:</strong> <br />${book.mfprofit}
               </p>
-              <IconButton className={classes.button} aria-label="Delete">
-                <DeleteIcon onClick={this.handleClickOpen} />
+              <IconButton
+                className={classes.button}
+                aria-label="Delete"
+                onClick={this.handleClickOpen}
+              >
+                <DeleteIcon />
 
                 <Dialog
                   open={this.state.open}
