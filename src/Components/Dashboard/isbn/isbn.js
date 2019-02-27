@@ -8,8 +8,6 @@ import Button from "@material-ui/core/Button";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import DataLayout from "../DataLayout/DataLayout";
-import DateFnsUtils from "@date-io/date-fns";
-import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -26,11 +24,6 @@ const styles = theme => ({
     "&:hover": {
       backgroundColor: "#1e81ce"
     }
-  },
-  calendar: {
-    margin: "0 auto",
-    flexDirection: "column",
-    display: "none"
   }
 });
 
@@ -55,10 +48,12 @@ class Isbn extends Component {
       profitFBA: "",
       mfFees: "",
       mfProfit: "",
+      totalBooks: "",
       errorIsbn: false,
       allowInputPrice: false,
       toggleReject: false,
-      dividerToggle: false
+      dividerToggle: false,
+      disabled: false
     };
   }
 
@@ -70,19 +65,22 @@ class Isbn extends Component {
   }
 
   handleClick = () => {
-    axios
-      .get(`/api/dashboard/${this.state.isbn}`)
-      .then(response => {
-        this.setState({
-          book: response.data,
-          isbn: "",
-          allowInputPrice: true,
-          toggleReject: true,
-          dividerToggle: true
-        });
-        console.log(this.state.dividerToggle);
-      })
-      .catch(err => this.setState({ errorIsbn: true }));
+    if (!this.state.book.title) {
+      axios
+        .get(`/api/dashboard/${this.state.isbn}`)
+        .then(response => {
+          this.setState({
+            book: response.data,
+            isbn: "",
+            allowInputPrice: true,
+            toggleReject: true,
+            dividerToggle: true,
+            disabled: true
+          });
+          console.log(this.state.dividerToggle);
+        })
+        .catch(err => this.setState({ errorIsbn: true }));
+    }
   };
 
   handleInputPrice = val => {
@@ -119,6 +117,7 @@ class Isbn extends Component {
         mfProfit: (inputPrice - fixedFee - costOfGood).toFixed(2),
         inputPrice: ""
       });
+      console.log(this.state.inputPrice);
     }
   };
 
@@ -148,10 +147,10 @@ class Isbn extends Component {
         mfFees: "",
         mfProfit: "",
         toggleReject: false,
+        disabled: false,
         dividerToggle: !this.state.dividerToggle
       });
     }
-    console.log(this.state.dividerToggle);
   };
 
   handleAdd = () => {
@@ -185,6 +184,7 @@ class Isbn extends Component {
             autoClose: 1500,
             closeOnClick: true
           });
+          this.setState({ disabled: false });
           this.handleReject();
         });
     }
@@ -196,16 +196,6 @@ class Isbn extends Component {
       <div>
         <div className="isbn_container">
           <MuiThemeProvider theme={theme}>
-            <div className={classes.calendar}>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <DatePicker
-                  margin="normal"
-                  label="Today's Date"
-                  onChange={this.handleDateChange}
-                  disableFuture={true}
-                />
-              </MuiPickersUtilsProvider>
-            </div>
             <div className="sub_isbn_container">
               <div className="isbn">
                 <TextField
@@ -216,6 +206,7 @@ class Isbn extends Component {
                   error={this.state.errorIsbn}
                   helperText={this.state.errorIsbn ? "Invalid ISBN" : " "}
                   autoFocus={true}
+                  disabled={this.state.disabled ? true : null}
                 />
                 <Button
                   color="primary"

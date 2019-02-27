@@ -50,7 +50,10 @@ const styles = theme => ({
   },
   button: {
     backgroundColor: "#ff5722",
-    color: "white"
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#1e81ce"
+    }
   },
   actionbutton: {
     margin: "0 auto",
@@ -83,7 +86,6 @@ const styles = theme => ({
     cards: {
       display: "flex",
       flexDirection: "column",
-      display: "flex",
       width: "auto",
       margin: "0 auto",
       marginTop: -15
@@ -95,7 +97,10 @@ const styles = theme => ({
       textAlign: "left"
     },
     inputCard: {
-      marginTop: -5
+      marginTop: 3
+    },
+    bookDetailCard: {
+      width: "auto"
     }
   },
   [theme.breakpoints.between("sm", "md")]: {
@@ -148,7 +153,12 @@ class DataLayout extends Component {
                 <List className={classes.list}>
                   <div className={classes.divs}>
                     <ListItem className={classes.list}>
-                      <img src={book} alt="book" id="book" />
+                      <img
+                        src={book}
+                        alt="book"
+                        id="book"
+                        className={title ? "animated heartBeat" : null}
+                      />
                       <ListItemText
                         primary="Title"
                         secondary={title ? title : "Title"}
@@ -160,7 +170,12 @@ class DataLayout extends Component {
                     />
 
                     <ListItem className={classes.booklist}>
-                      <img src={book} alt="book" id="book" />
+                      <img
+                        src={book}
+                        alt="book"
+                        id="book"
+                        className={title ? "animated heartBeat" : null}
+                      />
                       <ListItemText
                         primary="Image"
                         secondary={
@@ -183,7 +198,13 @@ class DataLayout extends Component {
                     />
 
                     <ListItem className={classes.list}>
-                      <img src={book} alt="book" id="book" />
+                      <img
+                        src={book}
+                        alt="book"
+                        id="book"
+                        className={title ? "animated heartBeat" : null}
+                      />
+
                       <ListItemText
                         primary="Binding"
                         secondary={binding ? binding : "Binding"}
@@ -197,7 +218,12 @@ class DataLayout extends Component {
                   </div>
                   <div className={classes.divs}>
                     <ListItem className={classes.list}>
-                      <img src={ranking} alt="book" id="book" />
+                      <img
+                        src={ranking}
+                        alt="book"
+                        id="book"
+                        className={title ? "animated heartBeat" : null}
+                      />
                       <ListItemText
                         primary="Used BuyBox Price"
                         secondary={
@@ -211,7 +237,12 @@ class DataLayout extends Component {
                       className={title ? classes.dividers : null}
                     />
                     <ListItem className={classes.list}>
-                      <img src={ranking} alt="book" id="book" />
+                      <img
+                        src={ranking}
+                        alt="book"
+                        id="book"
+                        className={title ? "animated heartBeat" : null}
+                      />
                       <ListItemText
                         primary="Sales Rank"
                         secondary={salesRank ? salesRank : "Sales Rank"}
@@ -239,6 +270,7 @@ class DataLayout extends Component {
                   }}
                   value={isbn.inputPrice}
                   color="primary"
+                  disabled={isbn.disabled ? null : true}
                 />
                 <Input
                   placeholder="Cost of Good"
@@ -247,7 +279,8 @@ class DataLayout extends Component {
                     this.props.handleCostofGood(e.target.value);
                   }}
                   color="primary"
-                  // value={this.props.isbn.costOfGood}  // the COGs should stay because usually with suppliers they are set on the same price
+                  disabled={isbn.disabled ? null : true}
+                  // value={isbn.costOfGood}  // the COGs should stay because usually with suppliers they are set on the same price
                 />
                 <Button
                   variant="contained"

@@ -1,31 +1,18 @@
-import "date-fns";
 import React, { Component } from "react";
-import Header from "../Dashboard/Header/Header";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import Desktop from "./inventory_Desktopview";
-import Mobile from "./inventory_mobileview";
-import axios from "axios";
+
+import Chart from "./Charts";
+import Header from "../Dashboard/Header/Header";
 
 const styles = theme => ({
   calendar: {
     color: "#ff5722",
     textAlign: "center",
     marginTop: 20
-  },
-  mobile: {
-    display: "none"
-  },
-  [theme.breakpoints.down("sm")]: {
-    mobile: {
-      display: "flex"
-    },
-    desktop: {
-      display: "none"
-    }
   }
 });
 
@@ -38,33 +25,15 @@ const theme = createMuiTheme({
   typography: { useNextVariants: true }
 });
 
-class Inventory extends Component {
+class ChartDate extends Component {
   constructor() {
     super();
     this.state = {
       todaysDate: this.handleTodaysChange(new Date()),
-      selectedDate: new Date(),
-      newDate: this.handleTodaysChange(new Date()),
-      inventoryList: []
+      selectedDate: new Date()
     };
   }
 
-  componentDidMount() {
-    const { todaysDate } = this.state;
-    axios.post("/api/getTodaysBooks", { todaysDate }).then(response => {
-      console.log(response.data);
-      this.setState({ inventoryList: response.data });
-    });
-  }
-
-  getInventory = () => {
-    const { newDate } = this.state;
-    console.log(newDate);
-    axios.post("/api/getBook", { newDate }).then(response => {
-      console.log(response.data);
-      this.setState({ inventoryList: response.data });
-    });
-  };
   handleTodaysChange = date => {
     if (date) {
       let MyDate = date;
@@ -80,6 +49,7 @@ class Inventory extends Component {
       return MyDateString;
     }
   };
+
   handleDateChange = date => {
     let newDate = "";
     if (date) {
@@ -94,16 +64,10 @@ class Inventory extends Component {
         ("0" + MyDate.getDate()).slice(-2);
       newDate = MyDateString;
     }
-    this.setState(
-      {
-        selectedDate: date,
-        newDate,
-        todaysDate: newDate
-      },
-      () => {
-        this.getInventory(newDate);
-      }
-    );
+    this.setState({
+      selectedDate: date,
+      todaysDate: newDate
+    });
   };
 
   render() {
@@ -118,31 +82,20 @@ class Inventory extends Component {
                 margin="normal"
                 label="Date"
                 onChange={this.handleDateChange}
-                disableFuture={true}
+                // disableFuture={true}
                 value={this.state.selectedDate}
               />
             </MuiPickersUtilsProvider>
           </div>
         </MuiThemeProvider>
-        <div className={classes.desktop}>
-          <Desktop
-            display={this.state.inventoryList}
-            getInventory={this.getInventory}
-          />
-        </div>
-        <div className={classes.mobile}>
-          <Mobile
-            display={this.state.inventoryList}
-            getInventory={this.getInventory}
-          />
-        </div>
+        <Chart todaysDate={this.state.todaysDate} />
       </div>
     );
   }
 }
 
-Inventory.propTypes = {
+ChartDate.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Inventory);
+export default withStyles(styles)(ChartDate);

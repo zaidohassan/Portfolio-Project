@@ -18,6 +18,7 @@ const {
 } = require("./controllers/userControllers/login");
 const { deleteBook } = require("./controllers/db_controllers/deleteBook");
 const { editUser } = require("./controllers/userControllers/editUser");
+const { bookChart } = require("./controllers/db_controllers/bookChart");
 
 app.use(json());
 const port = 3005;
@@ -49,6 +50,10 @@ app.post("/api/addBook", addBook);
 app.post("/api/getTodaysBooks", didMount);
 app.post("/api/getBook", getBooks);
 app.delete("/api/deleteInventory/:id", deleteBook);
+
+// ChartJS
+
+app.post("/api/getChartBook", bookChart);
 
 // get User Info / Create Users / Edit Users
 app.post("/auth/register", register);
