@@ -6,17 +6,14 @@ p {
   width: 20px;
 }
 
-#bookimage {
-  width: 60px;
-  height: 60px;
-  float: right;
-  position: absolute;
-  left: 50%;
-  bottom: 10%;
+.imageContainer {
+  width: 130px;
+  height: 130px;
+  background: white;
 }
 
-@media (max-width: 1000px) {
-  #book {
-    display: none;
-  }
+#bookimage {
+  width: 100%;
+  height: 100%;
+  image-rendering: -webkit-optimize-contrast;
 }

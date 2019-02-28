@@ -15,6 +15,9 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import SaveIcon from "@material-ui/icons/Save";
 import axios from "axios";
+import { TextField } from "@material-ui/core";
+import { S3_Access_Key_ID, S3_Secret_Access_Key } from "./keys";
+import S3 from "aws-s3";
 
 const styles = theme => ({
   bigAvatar: {
@@ -24,7 +27,9 @@ const styles = theme => ({
     marginTop: 75
   },
   formControl: {
-    margin: "0 auto"
+    margin: "0 auto",
+    marginTop: 30,
+    color: "#fff"
   },
   label: {
     color: "white",
@@ -49,70 +54,103 @@ const styles = theme => ({
   },
   icon: {
     margin: theme.spacing.unit * 2
+  },
+  inputFile: {
+    opacity: 0
+  },
+  cloudIcon: {
+    position: "absolute",
+    margin: "0 auto"
   }
 });
+
+const config = {
+  bucketName: "profilepictures1",
+  region: "us-east-2",
+  accessKeyId: S3_Access_Key_ID,
+  secretAccessKey: S3_Secret_Access_Key
+};
+
+const S3Client = new S3(config);
 
 class Profile extends Component {
   constructor() {
     super();
     this.state = {
-      profile: [],
-      editToggle: true,
-      newEmail: ""
+      newEmail: "",
+      profilePic: "",
+      editToggle: true
     };
   }
 
-  async componentDidMount() {
-    if (!this.state.profile) {
-      this.props.history.push("/");
-    } else {
-      await this.props.getUser();
-      this.setProfileInfo();
-    }
+  componentDidMount() {
+    this.props.getUser();
   }
 
-  setProfileInfo = () => {
-    console.log(this.props.state.reducer.user);
-    if (!this.props.state.reducer.user) {
+  verifyLogin = () => {
+    console.log(this.props.state.reducer.err);
+
+    if (this.props.state.reducer.err) {
       this.props.history.push("/");
+      console.log(this.props.state.reducer.err);
     }
-    this.setState({ profile: this.props.state.reducer.user });
-    console.log(this.state.profile);
   };
 
   editToggle = () => {
     this.setState({ editToggle: !this.state.editToggle });
-    console.log(this.state.editToggle);
   };
 
   handleChange = val => {
     this.setState({ newEmail: val });
-    console.log(this.state.newEmail);
   };
 
   saveChanges = () => {
-    const { newEmail } = this.state;
-    const { id } = this.state.profile;
-    console.log(this.state.profile.id);
+    const { newEmail, profilePic } = this.state;
+    const { id } = this.props.state.reducer.user;
 
-    axios.put(`/auth/editUser/${id}`, { newEmail }).then(response => {
-      console.log(response);
-      this.setState({
-        editToggle: true,
-        profile: response.data
+    axios
+      .put(`/auth/editUser/${id}`, { newEmail, profilePic })
+      .then(response => {
+        this.setState(
+          {
+            editToggle: true
+          },
+          () => {
+            this.props.getUser();
+          }
+        );
       });
-    });
+  };
+
+  upload = e => {
+    console.log(e.target.files[0]);
+    S3Client.uploadFile(e.target.files[0])
+      .then(data => {
+        console.log(data);
+        this.setState({ profilePic: data.location });
+        console.log(this.state.profilePic);
+      })
+      .catch(err => console.error(err));
   };
 
   render() {
+    // this.verifyLogin();
     const { classes } = this.props;
+    const { username, email, image } = this.props.state.reducer.user;
     return (
       <div className="entireprofile">
         <Header />
         <div className="flip-card">
           <div className="flip-card-inner">
             <div className="flip-card-front">
-              <Avatar alt="" src="" className={classes.bigAvatar} />
+              <div className={classes.name}>
+                <h2>{username}</h2>
+              </div>
+              <Avatar
+                alt="Profile Picture"
+                src={image}
+                className={classes.bigAvatar}
+              />
             </div>
             <div className="flip-card-back">
               <span>
@@ -126,15 +164,9 @@ class Profile extends Component {
 
               {this.state.editToggle ? (
                 <FormControl className={classes.formControl} disabled>
-                  <div className={classes.name}>
-                    <h2>{this.state.profile.username}</h2>
-                  </div>
                   <InputLabel htmlFor="component-disabled" />
-                  <Input
-                    id="component-disabled"
-                    value={this.state.profile.email}
-                  />
-                  <FormHelperText>Email</FormHelperText>
+                  <Input id="component-disabled" value={email} />
+                  <FormHelperText>Email </FormHelperText>
                 </FormControl>
               ) : (
                 <FormControl className={classes.formControlfalse}>
@@ -142,7 +174,7 @@ class Profile extends Component {
                   <Input
                     id="component-simple"
                     onChange={e => this.handleChange(e.target.value)}
-                    value={this.state.newEmail}
+                    value={email}
                   />
                   <FormHelperText>Email - Edit </FormHelperText>
 
@@ -150,11 +182,15 @@ class Profile extends Component {
                     id="hello"
                     variant="contained"
                     color="primary"
-                    type="file"
                     className={classes.uploadButton}
                   >
-                    <Input type="file" />
-                    <CloudUploadIcon className={classes.rightIcon} />
+                    Upload
+                    <TextField
+                      type="file"
+                      onChange={this.upload}
+                      className={classes.inputFile}
+                    />
+                    <CloudUploadIcon className={classes.cloudIcon} />
                   </Button>
 
                   <Button

@@ -5,7 +5,11 @@ const { json } = require("body-parser");
 const massive = require("massive");
 const session = require("express-session");
 const { isbnLookUp } = require("./controllers/getBookInfo/getBookInfo");
-const { addBook } = require("./controllers/db_controllers/addBook");
+const {
+  addBook,
+  rejectBookCount,
+  getBookCount
+} = require("./controllers/db_controllers/addBook");
 const {
   getBooks,
   didMount
@@ -44,6 +48,10 @@ massive(CONNECTION_STRING).then(dbInstance => {
 // Get Isbn when inputted or add a book when accepted
 app.get("/api/dashboard/:id", isbnLookUp);
 app.post("/api/addBook", addBook);
+
+// Add Reject Count to database and also get number of accepted books
+app.post("/api/addRejectedBook", rejectBookCount);
+app.post("/api/getBookCount", getBookCount);
 
 // Inventory
 

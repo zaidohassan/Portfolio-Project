@@ -80,3 +80,7 @@ p {
   float: right;
   margin: 10px;
 }
+
+#component-disabled {
+  color: #fff;
+}

@@ -15,6 +15,7 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import book from "../../../book.svg";
 import ranking from "../../../ranking.svg";
 import classNames from "classnames";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const styles = theme => ({
   root: {
@@ -35,9 +36,7 @@ const styles = theme => ({
     margin: "0 auto"
   },
   list: {
-    display: "flex",
-    justifyContent: "center",
-    margin: "0 auto"
+    display: "flex"
   },
   booklist: {
     display: "flex",
@@ -73,12 +72,20 @@ const styles = theme => ({
   dividers: {
     backgroundColor: "#ff5722"
   },
+  mobileDisplayIcons: {
+    display: "flex",
+    alignItems: "center"
+  },
   [theme.breakpoints.down("749")]: {
     list: {
       display: "flex",
       flexDirection: "column",
       alignItems: "flex-start",
       marginRight: 50
+    },
+    mobileDisplayIcons: {
+      display: "flex",
+      alignItems: "center"
     },
     listtext: {
       primary: { fontWeight: 600 }
@@ -90,9 +97,6 @@ const styles = theme => ({
       margin: "0 auto",
       marginTop: -15
     },
-    listtexttitle: {
-      marginRight: 100
-    },
     p: {
       textAlign: "left"
     },
@@ -101,6 +105,9 @@ const styles = theme => ({
     },
     bookDetailCard: {
       width: "auto"
+    },
+    listitemtext: {
+      marginLeft: 10
     }
   },
   [theme.breakpoints.between("sm", "md")]: {
@@ -153,62 +160,61 @@ class DataLayout extends Component {
                 <List className={classes.list}>
                   <div className={classes.divs}>
                     <ListItem className={classes.list}>
-                      <img
-                        src={book}
-                        alt="book"
-                        id="book"
-                        className={title ? "animated heartBeat" : null}
-                      />
-                      <ListItemText
-                        primary="Title"
-                        secondary={title ? title : "Title"}
-                      />
+                      <div className={classes.mobileDisplayIcons}>
+                        <Tooltip
+                          disableFocusListener
+                          disableTouchListener
+                          placement="top-start"
+                          title={
+                            imageURL ? (
+                              <div className="imageContainer">
+                                <img
+                                  src={imageURL}
+                                  alt="Book Cover"
+                                  id="bookimage"
+                                  className={classes.imageHover}
+                                />
+                              </div>
+                            ) : (
+                              "Book Image"
+                            )
+                          }
+                        >
+                          <img
+                            src={book}
+                            alt="book"
+                            id="book"
+                            className={title ? "animated heartBeat" : null}
+                          />
+                        </Tooltip>
+
+                        <ListItemText
+                          primary="Title"
+                          secondary={title ? title : "Title"}
+                          className={classes.listitemtext}
+                        />
+                      </div>
                     </ListItem>
+
                     <Divider
                       variant="fullWidth"
                       className={title ? classes.dividers : null}
                     />
-
-                    <ListItem className={classes.booklist}>
-                      <img
-                        src={book}
-                        alt="book"
-                        id="book"
-                        className={title ? "animated heartBeat" : null}
-                      />
-                      <ListItemText
-                        primary="Image"
-                        secondary={
-                          imageURL ? (
-                            <img
-                              src={imageURL}
-                              alt="Book Cover"
-                              id="bookimage"
-                            />
-                          ) : (
-                            "Image"
-                          )
-                        }
-                      />
-                    </ListItem>
-                    <Divider
-                      variant="fullWidth"
-                      component="li"
-                      className={title ? classes.dividers : null}
-                    />
-
                     <ListItem className={classes.list}>
-                      <img
-                        src={book}
-                        alt="book"
-                        id="book"
-                        className={title ? "animated heartBeat" : null}
-                      />
+                      <div className={classes.mobileDisplayIcons}>
+                        <img
+                          src={book}
+                          alt="book"
+                          id="book"
+                          className={title ? "animated heartBeat" : null}
+                        />
 
-                      <ListItemText
-                        primary="Binding"
-                        secondary={binding ? binding : "Binding"}
-                      />
+                        <ListItemText
+                          primary="Binding"
+                          secondary={binding ? binding : "Binding"}
+                          className={classes.listitemtext}
+                        />
+                      </div>
                     </ListItem>
                     <Divider
                       variant="fullWidth"
@@ -218,18 +224,21 @@ class DataLayout extends Component {
                   </div>
                   <div className={classes.divs}>
                     <ListItem className={classes.list}>
-                      <img
-                        src={ranking}
-                        alt="book"
-                        id="book"
-                        className={title ? "animated heartBeat" : null}
-                      />
-                      <ListItemText
-                        primary="Used BuyBox Price"
-                        secondary={
-                          usedBuyBoxPrice ? usedBuyBoxPrice : "BuyBox Price"
-                        }
-                      />
+                      <div className={classes.mobileDisplayIcons}>
+                        <img
+                          src={ranking}
+                          alt="book"
+                          id="book"
+                          className={title ? "animated heartBeat" : null}
+                        />
+                        <ListItemText
+                          primary="Used BuyBox Price"
+                          secondary={
+                            usedBuyBoxPrice ? usedBuyBoxPrice : "BuyBox Price"
+                          }
+                          className={classes.listitemtext}
+                        />
+                      </div>
                     </ListItem>
                     <Divider
                       variant="fullWidth"
@@ -237,16 +246,19 @@ class DataLayout extends Component {
                       className={title ? classes.dividers : null}
                     />
                     <ListItem className={classes.list}>
-                      <img
-                        src={ranking}
-                        alt="book"
-                        id="book"
-                        className={title ? "animated heartBeat" : null}
-                      />
-                      <ListItemText
-                        primary="Sales Rank"
-                        secondary={salesRank ? salesRank : "Sales Rank"}
-                      />
+                      <div className={classes.mobileDisplayIcons}>
+                        <img
+                          src={ranking}
+                          alt="book"
+                          id="book"
+                          className={title ? "animated heartBeat" : null}
+                        />
+                        <ListItemText
+                          primary="Sales Rank"
+                          secondary={salesRank ? salesRank : "Sales Rank"}
+                          className={classes.listitemtext}
+                        />
+                      </div>
                     </ListItem>
                     <Divider
                       variant="fullWidth"

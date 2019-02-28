@@ -16,9 +16,6 @@ const styles = theme => ({
     display: "flex",
     flexWrap: "wrap"
   },
-  margin: {
-    margin: "0 auto"
-  },
   button: {
     marginTop: 10,
     "&:hover": {
@@ -49,6 +46,7 @@ class Isbn extends Component {
       mfFees: "",
       mfProfit: "",
       totalBooks: "",
+      todaysDate: this.handleTodaysChange(new Date()),
       errorIsbn: false,
       allowInputPrice: false,
       toggleReject: false,
@@ -57,12 +55,43 @@ class Isbn extends Component {
     };
   }
 
-  handleChange(val) {
+  componentDidMount() {
+    this.getBookCount();
+  }
+  getBookCount = () => {
+    axios
+      .post("/api/getBookCount", { todaysDate: this.state.todaysDate })
+      .then(response => {
+        this.setState({
+          acceptCount: response.data.acceptCount,
+          rejectCount: response.data.rejectCount
+        });
+
+        console.log(this.state.acceptCount);
+      });
+  };
+  handleTodaysChange = date => {
+    if (date) {
+      let MyDate = date;
+      let MyDateString;
+      MyDate.setDate(MyDate.getDate());
+      MyDateString =
+        MyDate.getFullYear() +
+        "-" +
+        ("0" + (MyDate.getMonth() + 1)).slice(-2) +
+        "-" +
+        ("0" + MyDate.getDate()).slice(-2);
+
+      return MyDateString;
+    }
+  };
+
+  handleChange = val => {
     if (val.includes("-")) {
       val = val.split("-").join("");
     }
     this.setState({ isbn: val });
-  }
+  };
 
   handleClick = () => {
     if (!this.state.book.title) {
@@ -122,7 +151,10 @@ class Isbn extends Component {
   };
 
   handleReject = () => {
+    const { todaysDate } = this.state;
     if (this.state.book.title) {
+      console.log(todaysDate);
+      axios.post("/api/addRejectedBook", { todaysDate }).then(response => {});
       let reset = Object.assign({}, this.state);
       reset.book.title = "";
       reset.book.binding = "";
@@ -199,7 +231,6 @@ class Isbn extends Component {
             <div className="sub_isbn_container">
               <div className="isbn">
                 <TextField
-                  className={classes.margin}
                   label="ISBN"
                   value={this.state.isbn}
                   onChange={e => this.handleChange(e.target.value)}
