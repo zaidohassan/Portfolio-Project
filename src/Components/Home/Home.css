@@ -2,6 +2,9 @@ body {
   font-family: "Roboto Condensed", sans-serif;
 }
 
+#leftsideHeader {
+  margin: auto;
+}
 .entireapp {
   display: flex;
 }
@@ -23,7 +26,7 @@ section {
   text-align: center;
   color: rgba(255, 255, 255);
   position: absolute;
-  top: 40%;
+  top: 30%;
   left: 5%;
   font-size: 20px;
   width: 30vw;
@@ -31,7 +34,7 @@ section {
 
 .container {
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 58%;
   transform: translate(-50%, -50%);
   width: 340px;
@@ -77,12 +80,12 @@ section {
   border: none;
   cursor: pointer;
   font-family: "Roboto Condensed", sans-serif;
-  background: #3300ff;
+  background: #2600ba;
 }
 
 .loginbutton:hover {
-  background: #22fff8;
-  color: #3300ff;
+  background: #2f00e8;
+  color: #ff9800;
 }
 .login-form input::placeholder {
   color: #3300ff;
@@ -96,13 +99,20 @@ section {
 
 h1:hover {
   background: rgba(255, 255, 255, 0.01);
-  border-bottom: 3px solid #3300ff;
+  border-bottom: 3px solid #2600ba;
   cursor: pointer;
 }
 a {
   text-decoration: none !important;
 }
-@media (max-width: 1000px) {
+
+@media (max-width: 344px) {
+  .textaside h2 {
+    font-size: 21px;
+  }
+}
+
+@media (max-width: 700px) {
   .entireapp {
     display: flex;
     flex-direction: column;
@@ -111,35 +121,16 @@ a {
   .aside {
     width: 100%;
     height: 50vh;
-    margin: 0 auto;
-  }
-  p {
-    text-align: center;
   }
   .textaside {
-    top: 2%;
+    top: 6%;
     left: 1%;
     width: 100%;
   }
+  .textaside h2 {
+    font-size: 27px;
+  }
 
-  /* .aside {
-    background: #22fff8;
-    width: 50%;
-    left: 50%;
-  }
-  
-  .textaside {
-    font-family: "Rock Salt", cursive;
-    text-align: center;
-    color: rgba(255, 255, 255, 15);
-    position: absolute;
-    top: 40%;
-    left: 5%;
-    font-size: 20px;
-    background: #ff5722;
-    width: 30vw;
-  }
-   */
   section {
     width: 100%;
     height: 70vh;
@@ -147,12 +138,21 @@ a {
   .container {
     left: 50%;
     top: 65%;
+    width: 100vw;
+    height: 70vh;
   }
   .login-form {
     margin-top: 25%;
   }
 }
 
+@media (min-width: 701px) and (max-width: 1000px) {
+  .login-form {
+    margin-left: 10vw;
+    width: 300px;
+    margin-top: 5vh;
+  }
+}
 @media (min-width: 1000px) and (max-width: 1200px) {
   .container {
     left: 70%;
@@ -160,10 +160,13 @@ a {
   }
   .textaside {
     top: 30%;
-    left: 1%;
+    left: 6%;
   }
   section {
     width: 50vw;
     height: 100vh;
+  }
+  .login-form {
+    margin-top: 50%;
   }
 }

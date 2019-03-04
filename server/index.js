@@ -50,7 +50,7 @@ app.get("/api/dashboard/:id", isbnLookUp);
 app.post("/api/addBook", addBook);
 
 // Add Reject Count to database and also get number of accepted books
-app.post("/api/addRejectedBook", rejectBookCount);
+app.post("/api/addtoTotalBook", rejectBookCount);
 app.post("/api/getBookCount", getBookCount);
 
 // Inventory

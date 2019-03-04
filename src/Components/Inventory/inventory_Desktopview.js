@@ -42,13 +42,16 @@ const styles = theme => ({
     width: 50
   },
   button: {
-    color: "#ff5722"
+    color: "#e82c0c"
   },
   tablecellbutton: {
     textAlign: "center"
   },
   headers: {
     borderBottom: "1px solid black"
+  },
+  cancel: {
+    color: "#1e81ce"
   }
 });
 
@@ -77,7 +80,6 @@ class Desktop extends Component {
 
   render() {
     const { classes, display } = this.props;
-
     return (
       <Paper className={classes.root}>
         <Table className={classes.table}>
@@ -140,10 +142,15 @@ class Desktop extends Component {
                           </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                          <Button onClick={this.handleClose} color="primary">
+                          <Button
+                            className={classes.cancel}
+                            onClick={this.handleClose}
+                            color="primary"
+                          >
                             Cancel
                           </Button>
                           <Button
+                            className={classes.cancel}
                             color="primary"
                             autoFocus
                             onClick={() => this.handleDelete(book.id)}

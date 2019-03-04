@@ -1,7 +1,6 @@
 import "date-fns";
 import React, { Component } from "react";
 import axios from "axios";
-import "./isbn.css";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -10,6 +9,8 @@ import TextField from "@material-ui/core/TextField";
 import DataLayout from "../DataLayout/DataLayout";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Header from "../Header/Header";
+import Counter from "./Counter";
 
 const styles = theme => ({
   container: {
@@ -17,9 +18,50 @@ const styles = theme => ({
     flexWrap: "wrap"
   },
   button: {
-    marginTop: 10,
+    marginTop: 15,
     "&:hover": {
       backgroundColor: "#1e81ce"
+    }
+  },
+  isbn: {
+    paddingLeft: 60
+  },
+  HeaderIsbn: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingTop: 80,
+    width: 1050,
+    margin: "auto"
+  },
+  isbnCounter: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: 700
+  },
+
+  [theme.breakpoints.down("1100")]: {
+    HeaderIsbn: {
+      flexDirection: "column",
+      margin: "auto",
+      paddingTop: 0,
+      width: 0
+    },
+    isbnCounter: {
+      flexDirection: "column",
+      width: "auto",
+      marginTop: 60
+    },
+    isbn: {
+      display: "flex",
+      alignItems: "center",
+      width: 200,
+      margin: "auto",
+      paddingLeft: 1
+    },
+    button: {
+      marginTop: 0,
+      marginBottom: 5
     }
   }
 });
@@ -27,7 +69,7 @@ const styles = theme => ({
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#ff5722"
+      main: "#e82c0c"
     }
   },
   typography: { useNextVariants: true }
@@ -40,7 +82,7 @@ class Isbn extends Component {
       isbn: "",
       book: {},
       inputPrice: "",
-      costOfGood: "",
+      costOfGood: 0,
       totalFbaFee: "",
       profitFBA: "",
       mfFees: "",
@@ -58,16 +100,18 @@ class Isbn extends Component {
   componentDidMount() {
     this.getBookCount();
   }
+
   getBookCount = () => {
     axios
       .post("/api/getBookCount", { todaysDate: this.state.todaysDate })
       .then(response => {
+        let percentageCount =
+          (response.data.acceptCount / response.data.totalCount) * 100;
         this.setState({
           acceptCount: response.data.acceptCount,
-          rejectCount: response.data.rejectCount
+          totalCount: response.data.totalCount,
+          percentageCount: percentageCount.toFixed(2)
         });
-
-        console.log(this.state.acceptCount);
       });
   };
   handleTodaysChange = date => {
@@ -104,9 +148,9 @@ class Isbn extends Component {
             allowInputPrice: true,
             toggleReject: true,
             dividerToggle: true,
-            disabled: true
+            disabled: true,
+            errorIsbn: false
           });
-          console.log(this.state.dividerToggle);
         })
         .catch(err => this.setState({ errorIsbn: true }));
     }
@@ -146,15 +190,14 @@ class Isbn extends Component {
         mfProfit: (inputPrice - fixedFee - costOfGood).toFixed(2),
         inputPrice: ""
       });
-      console.log(this.state.inputPrice);
+      console.log(this.state.inputPrice, this.state.costOfGood);
     }
   };
 
   handleReject = () => {
     const { todaysDate } = this.state;
     if (this.state.book.title) {
-      console.log(todaysDate);
-      axios.post("/api/addRejectedBook", { todaysDate }).then(response => {});
+      axios.post("/api/addtoTotalBook", { todaysDate }).then(response => {});
       let reset = Object.assign({}, this.state);
       reset.book.title = "";
       reset.book.binding = "";
@@ -171,17 +214,22 @@ class Isbn extends Component {
       reset.mfFees = "";
       reset.mfProfit = "";
       reset.dividerToggle = !this.state.dividerToggle;
-      this.setState({
-        book: reset,
-        inputPrice: "",
-        totalFbaFee: "",
-        profitFBA: "",
-        mfFees: "",
-        mfProfit: "",
-        toggleReject: false,
-        disabled: false,
-        dividerToggle: !this.state.dividerToggle
-      });
+      this.setState(
+        {
+          book: reset,
+          inputPrice: "",
+          totalFbaFee: "",
+          profitFBA: "",
+          mfFees: "",
+          mfProfit: "",
+          toggleReject: false,
+          disabled: false,
+          dividerToggle: !this.state.dividerToggle
+        },
+        () => {
+          this.getBookCount();
+        }
+      );
     }
   };
 
@@ -225,11 +273,12 @@ class Isbn extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
-        <div className="isbn_container">
-          <MuiThemeProvider theme={theme}>
-            <div className="sub_isbn_container">
-              <div className="isbn">
+      <div className={classes.container}>
+        <div className={classes.HeaderIsbn}>
+          <Header />
+          <div className={classes.isbnCounter}>
+            <MuiThemeProvider theme={theme}>
+              <div className={classes.isbn}>
                 <TextField
                   label="ISBN"
                   value={this.state.isbn}
@@ -249,8 +298,9 @@ class Isbn extends Component {
                   GO
                 </Button>
               </div>
-            </div>
-          </MuiThemeProvider>
+            </MuiThemeProvider>
+            <Counter bookCount={this.state} />
+          </div>
         </div>
         <DataLayout
           data={this.state.book}

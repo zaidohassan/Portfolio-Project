@@ -13,6 +13,9 @@ const styles = theme => ({
     color: "#ff5722",
     textAlign: "center",
     marginTop: 20
+  },
+  header: {
+    textAlign: "center"
   }
 });
 
@@ -33,6 +36,22 @@ class ChartDate extends Component {
       selectedDate: new Date()
     };
   }
+
+  handleTodaysChange = date => {
+    if (date) {
+      let MyDate = date;
+      let MyDateString;
+      MyDate.setDate(MyDate.getDate());
+      MyDateString =
+        MyDate.getFullYear() +
+        "-" +
+        ("0" + (MyDate.getMonth() + 1)).slice(-2) +
+        "-" +
+        ("0" + MyDate.getDate()).slice(-2);
+
+      return MyDateString;
+    }
+  };
 
   handleDateChange = date => {
     let newDate = "";
@@ -58,7 +77,9 @@ class ChartDate extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <Header />
+        <div className={classes.header}>
+          <Header />
+        </div>
         <MuiThemeProvider theme={theme}>
           <div className={classes.calendar}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>

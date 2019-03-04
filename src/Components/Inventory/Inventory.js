@@ -19,6 +19,9 @@ const styles = theme => ({
   mobile: {
     display: "none"
   },
+  header: {
+    textAlign: "center"
+  },
   [theme.breakpoints.down("sm")]: {
     mobile: {
       display: "flex"
@@ -110,7 +113,9 @@ class Inventory extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <Header />
+        <div className={classes.header}>
+          <Header className={classes.button} />
+        </div>
         <MuiThemeProvider theme={theme}>
           <div className={classes.calendar}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>

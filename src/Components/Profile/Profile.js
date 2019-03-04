@@ -61,7 +61,12 @@ const styles = theme => ({
   cloudIcon: {
     position: "absolute",
     margin: "0 auto"
-  }
+  },
+  header: {
+    textAlign: "center"
+  },
+
+  button: { backgroundColor: "transparent" }
 });
 
 const config = {
@@ -139,7 +144,9 @@ class Profile extends Component {
     const { username, email, image } = this.props.state.reducer.user;
     return (
       <div className="entireprofile">
-        <Header />
+        <div className={classes.header}>
+          <Header />
+        </div>
         <div className="flip-card">
           <div className="flip-card-inner">
             <div className="flip-card-front">

@@ -19,20 +19,16 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 const styles = theme => ({
   root: {
-    width: "100%",
-    margin: "0 auto",
-    marginTop: -10
+    margin: "auto"
   },
   card: {
     margin: "0 auto",
-    marginTop: 30
-  },
-  bookDetailCard: {
+    marginTop: 30,
     width: 500
   },
   cards: {
     display: "flex",
-    width: 1100,
+    width: 1150,
     margin: "0 auto"
   },
   list: {
@@ -48,18 +44,20 @@ const styles = theme => ({
     marginRight: 50
   },
   button: {
-    backgroundColor: "#ff5722",
+    backgroundColor: "#e82c0c",
     color: "white",
     "&:hover": {
       backgroundColor: "#1e81ce"
-    }
+    },
+    width: 100
   },
   actionbutton: {
-    margin: "0 auto",
     textAlign: "center"
   },
-  inputs: {
-    display: "flex"
+  inputsNbutton: {
+    display: "flex",
+    alignItems: "center",
+    width: "auto"
   },
   input: {
     marginRight: 10
@@ -70,18 +68,25 @@ const styles = theme => ({
     }
   },
   dividers: {
-    backgroundColor: "#ff5722"
+    background: "linear-gradient(to right bottom, #e82c0c, #1e81ce)",
+    backgroundRepeat: "repeat-x"
   },
   mobileDisplayIcons: {
     display: "flex",
     alignItems: "center"
   },
   [theme.breakpoints.down("749")]: {
+    root: {
+      marginTop: -10
+    },
+    CardContent: {
+      padding: 4
+    },
     list: {
       display: "flex",
       flexDirection: "column",
       alignItems: "flex-start",
-      marginRight: 50
+      marginRight: 60
     },
     mobileDisplayIcons: {
       display: "flex",
@@ -94,20 +99,47 @@ const styles = theme => ({
       display: "flex",
       flexDirection: "column",
       width: "auto",
-      margin: "0 auto",
       marginTop: -15
     },
     p: {
       textAlign: "left"
     },
-    inputCard: {
-      marginTop: 3
+    card: {
+      width: "auto",
+      marginTop: 0
     },
-    bookDetailCard: {
-      width: "auto"
+    inputCard: {
+      width: "auto",
+      marginTop: 5,
+      margin: 0
     },
     listitemtext: {
       marginLeft: 10
+    },
+    actionbutton: {
+      marginTop: 30
+    },
+    input: {
+      width: 120
+    },
+    button: {
+      width: 90,
+      marginTop: 5
+    },
+    dividers: {
+      width: 400
+    },
+    bookDetailCard: {
+      marginTop: 30,
+      margin: 0
+    },
+    inputsNbutton: {
+      padding: 10
+    }
+  },
+  [theme.breakpoints.down("365")]: {
+    input: {
+      width: 95
     }
   },
   [theme.breakpoints.between("sm", "md")]: {
@@ -125,10 +157,7 @@ const styles = theme => ({
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#ff5722"
-    },
-    secondary: {
-      main: "#3300ff"
+      main: "#e82c0c"
     }
   },
   typography: { useNextVariants: true }
@@ -218,7 +247,6 @@ class DataLayout extends Component {
                     </ListItem>
                     <Divider
                       variant="fullWidth"
-                      component="li"
                       className={title ? classes.dividers : null}
                     />
                   </div>
@@ -242,7 +270,6 @@ class DataLayout extends Component {
                     </ListItem>
                     <Divider
                       variant="fullWidth"
-                      component="li"
                       className={title ? classes.dividers : null}
                     />
                     <ListItem className={classes.list}>
@@ -262,7 +289,6 @@ class DataLayout extends Component {
                     </ListItem>
                     <Divider
                       variant="fullWidth"
-                      component="li"
                       className={title ? classes.dividers : null}
                     />
                   </div>
@@ -272,43 +298,42 @@ class DataLayout extends Component {
           </Card>
 
           <Card className={classNames(classes.card, classes.inputCard)}>
-            <CardContent>
-              <div className={classes.inputs}>
-                <Input
-                  placeholder="Input Price"
-                  className={classes.input}
-                  onChange={e => {
-                    this.props.handleInputPrice(e.target.value);
-                  }}
-                  value={isbn.inputPrice}
-                  color="primary"
-                  disabled={isbn.disabled ? null : true}
-                />
-                <Input
-                  placeholder="Cost of Good"
-                  className={classes.input}
-                  onChange={e => {
-                    this.props.handleCostofGood(e.target.value);
-                  }}
-                  color="primary"
-                  disabled={isbn.disabled ? null : true}
-                  // value={isbn.costOfGood}  // the COGs should stay because usually with suppliers they are set on the same price
-                />
-                <Button
-                  variant="contained"
-                  size="small"
-                  className={classes.button}
-                  onClick={() => {
-                    if (isbn.inputPrice) {
+            <MuiThemeProvider theme={theme}>
+              <CardContent className={classes.CardContent}>
+                <div className={classes.inputsNbutton}>
+                  <Input
+                    placeholder="Input Price"
+                    className={classes.input}
+                    onChange={e => {
+                      this.props.handleInputPrice(e.target.value);
+                    }}
+                    value={isbn.inputPrice}
+                    color="primary"
+                    disabled={isbn.disabled ? null : true}
+                  />
+                  <Input
+                    placeholder="Cost of Good"
+                    className={classes.input}
+                    onChange={e => {
+                      this.props.handleCostofGood(e.target.value);
+                    }}
+                    color="primary"
+                    disabled={isbn.disabled ? null : true}
+                  />
+
+                  <Button
+                    variant="contained"
+                    size="small"
+                    className={classes.button}
+                    onClick={() => {
                       this.props.getFees();
-                    }
-                  }}
-                  color="primary"
-                >
-                  GO
-                </Button>
-              </div>
-              <MuiThemeProvider theme={theme}>
+                    }}
+                    disabled={isbn.inputPrice ? null : true}
+                    color="primary"
+                  >
+                    GET FEES
+                  </Button>
+                </div>
                 <List className={classes.list}>
                   <div className={classes.divs}>
                     <ListItem className={classes.list}>
@@ -319,7 +344,6 @@ class DataLayout extends Component {
                     </ListItem>
                     <Divider
                       variant="fullWidth"
-                      component="li"
                       className={isbn.profitFBA ? classes.dividers : null}
                     />
 
@@ -345,7 +369,6 @@ class DataLayout extends Component {
                     </ListItem>
                     <Divider
                       variant="fullWidth"
-                      component="li"
                       className={isbn.profitFBA ? classes.dividers : null}
                     />
                     <ListItem>
@@ -356,13 +379,12 @@ class DataLayout extends Component {
                     </ListItem>
                     <Divider
                       variant="fullWidth"
-                      component="li"
                       className={isbn.profitFBA ? classes.dividers : null}
                     />
                   </div>
                 </List>
-              </MuiThemeProvider>
-            </CardContent>
+              </CardContent>
+            </MuiThemeProvider>
           </Card>
         </div>
       </div>

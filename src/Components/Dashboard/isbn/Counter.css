@@ -1,0 +1,14 @@
+#sumimage {
+  width: 25px;
+  height: 25px;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 1000px) {
+  #sumimage {
+    margin-bottom: 10px;
+  }
+  #label {
+    color: #1e81ce;
+  }
+}

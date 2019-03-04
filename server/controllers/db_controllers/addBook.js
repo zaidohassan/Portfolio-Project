@@ -55,10 +55,12 @@ module.exports = {
     try {
       const db = req.app.get("db");
       const { todaysDate } = req.body;
+
       db.getBookCount(todaysDate).then(response => {
+        console.log(response);
         let acceptCount = response[0].count;
-        let rejectCount = response[1].count;
-        res.status(200).json({ acceptCount, rejectCount });
+        let totalCount = response[1].count;
+        res.status(200).json({ acceptCount, totalCount });
       });
     } catch (err) {
       console.log(err);

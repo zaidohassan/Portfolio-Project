@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import "./Header.css";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -12,7 +13,7 @@ import Link from "@material-ui/core/Link";
 import { withRouter } from "react-router";
 import axios from "axios";
 
-const styles = {
+const styles = theme => ({
   list: {
     width: 250
   },
@@ -24,11 +25,22 @@ const styles = {
   },
   button: {
     textAlign: "center",
-    border: "1px solid black",
+    border: "1.5px solid #e82c0c",
     marginTop: 10,
-    margin: "0 auto"
+    margin: "0 auto",
+    backgroundColor: "#fff"
   }
-};
+});
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#ff5722"
+    }
+  },
+  typography: { useNextVariants: true }
+});
+
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -44,7 +56,6 @@ class Header extends Component {
   };
 
   logout = () => {
-    // axios GET to /auth/logout here
     axios
       .get("/auth/logout")
       .then(res => {
@@ -78,27 +89,29 @@ class Header extends Component {
     );
     return (
       <div className="drawer">
-        <Button
-          className={classes.button}
-          onClick={this.toggleDrawer("top", true)}
-        >
-          OPEN
-        </Button>
-        <SwipeableDrawer
-          anchor="top"
-          open={this.state.top}
-          onClose={this.toggleDrawer("top", false)}
-          onOpen={this.toggleDrawer("top", true)}
-        >
-          <div
-            tabIndex={0}
-            role="button"
-            onClick={this.toggleDrawer("top", false)}
-            onKeyDown={this.toggleDrawer("top", false)}
+        <MuiThemeProvider theme={theme}>
+          <Button
+            className={classes.button}
+            onClick={this.toggleDrawer("top", true)}
           >
-            {fullList}
-          </div>
-        </SwipeableDrawer>
+            MENU
+          </Button>
+          <SwipeableDrawer
+            anchor="top"
+            open={this.state.top}
+            onClose={this.toggleDrawer("top", false)}
+            onOpen={this.toggleDrawer("top", true)}
+          >
+            <div
+              tabIndex={0}
+              role="button"
+              onClick={this.toggleDrawer("top", false)}
+              onKeyDown={this.toggleDrawer("top", false)}
+            >
+              {fullList}
+            </div>
+          </SwipeableDrawer>
+        </MuiThemeProvider>
       </div>
     );
   }

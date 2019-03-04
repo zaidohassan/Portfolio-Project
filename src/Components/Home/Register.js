@@ -40,8 +40,9 @@ export default class Register extends Component {
       <div className="entireapp">
         <div className="aside">
           <div className="textaside">
-            <p> Welcome to Bookers</p>
-            <p> Your Revolutionized BookSelling App</p>
+            <h2> Welcome to Bookers</h2>
+            <h2> Your Revolutionized BookSelling App</h2>
+            <h3> </h3>
           </div>
         </div>
         <section>
@@ -77,7 +78,7 @@ export default class Register extends Component {
                   value={email}
                   onChange={this.updateInput}
                 />
-                <input type="submit" className="loginbutton" />
+                <input type="submit" value="Register" className="loginbutton" />
               </form>
             </div>
           </div>

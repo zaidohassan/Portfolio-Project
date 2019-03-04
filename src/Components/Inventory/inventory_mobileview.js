@@ -29,7 +29,11 @@ const styles = theme => ({
     paddingLeft: 15
   },
   button: {
-    marginLeft: 10
+    marginLeft: 10,
+    color: "#e82c0c"
+  },
+  cancel: {
+    color: "#1e81ce"
   }
 });
 
@@ -42,7 +46,7 @@ class Mobile extends Component {
   }
 
   handleClickOpen = () => {
-    this.setState({ open: true });
+    this.setState({ open: !this.state.open });
   };
 
   handleClose = () => {
@@ -101,10 +105,15 @@ class Mobile extends Component {
                     </DialogContentText>
                   </DialogContent>
                   <DialogActions>
-                    <Button onClick={this.handleClose} color="primary">
+                    <Button
+                      className={classes.cancel}
+                      onClick={this.handleClose}
+                      color="primary"
+                    >
                       Cancel
                     </Button>
                     <Button
+                      className={classes.cancel}
                       onClick={() => this.handleDelete(book.id)}
                       color="primary"
                       autoFocus

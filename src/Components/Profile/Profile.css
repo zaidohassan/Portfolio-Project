@@ -12,10 +12,12 @@
   left: 0;
   background: url("https://images.unsplash.com/photo-1526721940322-10fb6e3ae94a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80");
 }
+
 .entireprofile button {
   color: white;
   border: 1px solid white;
   margin-top: 5vh;
+  background: transparent;
 }
 
 .name {
@@ -36,7 +38,7 @@ p {
   height: 450px;
   perspective: 1000px;
   margin: 0 auto;
-  margin-top: 10vh;
+  margin-top: 5vh;
   border-radius: 5px;
 }
 

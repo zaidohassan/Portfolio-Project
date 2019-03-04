@@ -57,8 +57,9 @@ export default class Home extends Component {
         />
         <div className="aside">
           <div className="textaside">
-            <p> Welcome to Bookers</p>
-            <p> Your Revolutionized BookSelling App</p>
+            <h2> Welcome to Bookers</h2>
+            <h2> Revolutionized BookSelling App</h2>
+            <h3> </h3>
           </div>
         </div>
         <section>
@@ -88,7 +89,6 @@ export default class Home extends Component {
                   required
                 />
                 <button className="loginbutton" onClick={this.login}>
-                  {" "}
                   LogIn
                 </button>
               </form>
