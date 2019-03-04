@@ -16,8 +16,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import SaveIcon from "@material-ui/icons/Save";
 import axios from "axios";
 import { TextField } from "@material-ui/core";
-import { S3_Access_Key_ID, S3_Secret_Access_Key } from "./keys";
-import S3 from "aws-s3";
 
 const styles = theme => ({
   bigAvatar: {
@@ -69,15 +67,6 @@ const styles = theme => ({
   button: { backgroundColor: "transparent" }
 });
 
-const config = {
-  bucketName: "profilepictures1",
-  region: "us-east-2",
-  accessKeyId: S3_Access_Key_ID,
-  secretAccessKey: S3_Secret_Access_Key
-};
-
-const S3Client = new S3(config);
-
 class Profile extends Component {
   constructor() {
     super();
@@ -93,8 +82,6 @@ class Profile extends Component {
   }
 
   verifyLogin = () => {
-    console.log(this.props.state.reducer.err);
-
     if (this.props.state.reducer.err) {
       this.props.history.push("/");
       console.log(this.props.state.reducer.err);
@@ -112,7 +99,6 @@ class Profile extends Component {
   saveChanges = () => {
     const { newEmail, profilePic } = this.state;
     const { id } = this.props.state.reducer.user;
-
     axios
       .put(`/auth/editUser/${id}`, { newEmail, profilePic })
       .then(response => {
@@ -128,14 +114,15 @@ class Profile extends Component {
   };
 
   upload = e => {
-    console.log(e.target.files[0]);
-    S3Client.uploadFile(e.target.files[0])
+    let data = new FormData();
+    data.append("pic", e.target.files[0]);
+    console.log(data);
+    axios
+      .post("/auth/uploadPic", data)
       .then(data => {
-        console.log(data);
-        this.setState({ profilePic: data.location });
-        console.log(this.state.profilePic);
+        this.setState({ profilePic: data.data.Location });
       })
-      .catch(err => console.error(err));
+      .catch(err => console.log(err));
   };
 
   render() {

@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 const initialState = {
-  user: [],
+  user: {},
   err: false
 };
 
@@ -10,7 +10,7 @@ const GET_USER = "GET_USER";
 export function getUser() {
   return {
     type: GET_USER,
-    payload: axios.get("/auth/verifylogin")
+    payload: axios.get("/auth/me")
   };
 }
 
@@ -31,7 +31,8 @@ export default function userReducer(state = initialState, action) {
     case `${GET_USER}_REJECTED`:
       return {
         ...state,
-        err: true
+        err: true,
+        msg: action.payload.data
       };
 
     default:

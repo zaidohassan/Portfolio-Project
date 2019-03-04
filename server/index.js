@@ -1,10 +1,10 @@
 require("dotenv").config();
 const path = require("path");
 const express = require("express");
-const app = express();
 const { json } = require("body-parser");
 const massive = require("massive");
 const session = require("express-session");
+const multer = require("multer");
 const { isbnLookUp } = require("./controllers/getBookInfo/getBookInfo");
 const {
   addBook,
@@ -23,14 +23,13 @@ const {
 } = require("./controllers/userControllers/login");
 const { deleteBook } = require("./controllers/db_controllers/deleteBook");
 const { editUser } = require("./controllers/userControllers/editUser");
+const { uploadPic } = require("./controllers/userControllers/uploadPic");
 const { bookChart } = require("./controllers/db_controllers/bookChart");
 
+const app = express();
+const upload = multer();
 app.use(json());
 app.use(express.static(`${__dirname}/../build`));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../build/index.html"));
-});
 
 const port = 3005;
 
@@ -70,14 +69,19 @@ app.delete("/api/deleteInventory/:id", deleteBook);
 
 app.post("/api/getChartBook", bookChart);
 
-// get User Info / Create Users / Edit Users
+// get User Info / Create Users / Edit Users // Upload Pic
 app.post("/auth/register", register);
 app.post("/auth/login", login);
-app.get("/auth/verifylogin", verifyLogin);
+app.post("/auth/uploadPic", upload.single("pic"), uploadPic);
+app.get("/auth/me", verifyLogin);
 app.put("/auth/editUser/:id", editUser);
 
 // logout
 
 app.get("/auth/logout", logout);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../build/index.html"));
+});
 
 app.listen(port, () => console.log(`Listening on ${port}`));
