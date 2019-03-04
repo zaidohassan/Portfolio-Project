@@ -1,4 +1,4 @@
-Welcome to BookScout.io! Revolutionized User Friendly Amazon Bulk Book Scanning App!
+Welcome to BookScout! Revolutionized User Friendly Amazon Bulk Book Scanning App!
 
 ## Where to Start
 
