@@ -40,7 +40,7 @@ export default class Register extends Component {
       <div className="entireapp">
         <div className="aside">
           <div className="textaside">
-            <h2> Welcome to Bookers</h2>
+            <h2> Welcome to Book Scout</h2>
             <h2> Revolutionized BookSelling App</h2>
             <h3> </h3>
           </div>
