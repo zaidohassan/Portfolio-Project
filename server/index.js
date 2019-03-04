@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require("path");
 const express = require("express");
 const app = express();
 const { json } = require("body-parser");
@@ -26,6 +27,10 @@ const { bookChart } = require("./controllers/db_controllers/bookChart");
 
 app.use(json());
 app.use(express.static(`${__dirname}/../build`));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../build/index.html"));
+});
 
 const port = 3005;
 
