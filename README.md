@@ -1,68 +1,42 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to BookScout.io! Revolutionized User Friendly Amazon Bulk Book Scanning App!
 
-## Available Scripts
+## Where to Start
 
-In the project directory, you can run:
+You can find our home page to have our directory to signing up with our software (email is not required) and a login function. We are still
+producing the About Us page which will briefly describe our history selling on Amazon and providing a software to bulk book buyers to apply
+to their business.
 
-### `npm start`
+## Naviagate to the Menu button to switch pages
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Dashboard
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+After logging in, you will be redirected to the Dashboard where you can begin scanning your first book! Enter the ISBN-13, which then will give you the info of the book on the left card. You can hover over the title book image which will give you the image of the book to
+compare with the book on hand. Binding is shown because sometimes you Paperback/Hardcover are presented with the same ISBN.
 
-### `npm test`
+You can enter an input price of how much you would like to sell the book for given the current BuyBox Price if you would like to stay
+competitive. Also you have the current Sales Rank on hand to determine if you would like to even proceed with the Input Price.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Input Price and Cost of Good will be entered and then you will have your fee calculator to show you your Profit via FBA or MF. (Two different
+methods of selling on Amazon which depends on your business model)
 
-### `npm run build`
+You have the option of accepting the book (which is the add button) or reject the book (the x button).
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Adding it will add it to your inventory and reject will dent it, after your selection it will clear your fields which allows you to keep scanning!
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+You must accept/reject a book so we can keep your stat of the day which is shown on the top right corner. Each symbol can be hovered over to
+tell you what stat is it describing.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Inventory
 
-### `npm run eject`
+View the books you have accepted for any date you signed up with us! You have the option of deleteing books from your Inventory as well.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Charts
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+View the books you have accepted between Sales Rank. Rememeber Sales Rank is how you determine how fast the book will sell on Amazon.
+The lower the Sales Rrank (1) the faster the book sells. Everyone has a different bussiness model of selling books so this helps you gain
+insight on your business models and if you need to adjust your requirments of accepting books based off how much/ how fast your selling on
+Amazon.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Profile
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+View and Edit your profile by inserting an Image or editing your email!

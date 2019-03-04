@@ -25,6 +25,8 @@ const { editUser } = require("./controllers/userControllers/editUser");
 const { bookChart } = require("./controllers/db_controllers/bookChart");
 
 app.use(json());
+app.use(express.static(`${__dirname}/../build`));
+
 const port = 3005;
 
 const { SESSION_SECRET, CONNECTION_STRING } = process.env;
