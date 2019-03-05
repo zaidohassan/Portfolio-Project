@@ -126,7 +126,7 @@ class Profile extends Component {
   };
 
   render() {
-    // this.verifyLogin();
+    this.verifyLogin();
     const { classes } = this.props;
     const { username, email, image } = this.props.state.reducer.user;
     return (

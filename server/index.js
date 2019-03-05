@@ -31,9 +31,7 @@ const upload = multer();
 app.use(json());
 app.use(express.static(`${__dirname}/../build`));
 
-const port = 3005;
-
-const { SESSION_SECRET, CONNECTION_STRING } = process.env;
+const { SESSION_SECRET, CONNECTION_STRING, SERVER_PORT } = process.env;
 
 app.use(
   session({
@@ -84,4 +82,4 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
 });
 
-app.listen(port, () => console.log(`Listening on ${port}`));
+app.listen(SERVER_PORT, () => console.log(`Listening on ${SERVER_PORT}`));

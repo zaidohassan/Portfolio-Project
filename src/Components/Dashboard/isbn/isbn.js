@@ -13,10 +13,6 @@ import Header from "../Header/Header";
 import Counter from "./Counter";
 
 const styles = theme => ({
-  container: {
-    display: "flex",
-    flexWrap: "wrap"
-  },
   button: {
     marginTop: 15,
     "&:hover": {
@@ -88,6 +84,9 @@ class Isbn extends Component {
       mfFees: "",
       mfProfit: "",
       totalBooks: "",
+      acceptCount: 0,
+      totalCount: 0,
+      percentageCount: 0,
       todaysDate: this.handleTodaysChange(new Date()),
       errorIsbn: false,
       allowInputPrice: false,
@@ -102,6 +101,7 @@ class Isbn extends Component {
   }
 
   getBookCount = () => {
+    console.log(this.state.todaysDate);
     axios
       .post("/api/getBookCount", { todaysDate: this.state.todaysDate })
       .then(response => {
