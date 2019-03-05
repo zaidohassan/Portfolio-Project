@@ -106,12 +106,6 @@ a {
   text-decoration: none !important;
 }
 
-@media (max-width: 344px) {
-  .textaside h2 {
-    font-size: 21px;
-  }
-}
-
 @media (max-width: 700px) {
   .entireapp {
     display: flex;
@@ -143,6 +137,19 @@ a {
   }
   .login-form {
     margin-top: 25%;
+  }
+}
+@media (max-width: 380px) {
+  .textaside h2 {
+    font-size: 20px;
+  }
+  .textaside {
+    margin-top: 25px;
+  }
+}
+@media (max-width: 344px) {
+  .textaside h2 {
+    font-size: 21px;
   }
 }
 
