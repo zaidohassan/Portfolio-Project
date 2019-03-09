@@ -110,7 +110,6 @@ a {
   .entireapp {
     display: flex;
     flex-direction: column;
-    height: 100vh;
   }
   .aside {
     width: 100%;
@@ -131,12 +130,13 @@ a {
   }
   .container {
     left: 50%;
-    top: 68%;
+    top: 72%;
     height: 70vh;
   }
   .login-form {
     margin-top: 5%;
-    height: 100vh;
+    padding-bottom: 70px;
+    margin-top: 70px;
   }
 }
 
@@ -172,9 +172,17 @@ a {
   .textaside {
     margin-top: 25px;
   }
+  .login-form {
+    padding-bottom: 90px;
+    margin-top: 70px;
+  }
 }
 @media (max-width: 344px) {
   .textaside h2 {
     font-size: 21px;
+  }
+  .login-form {
+    padding-bottom: 50px;
+    margin-top: 70px;
   }
 }
