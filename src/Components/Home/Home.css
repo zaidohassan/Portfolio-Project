@@ -131,25 +131,12 @@ a {
   }
   .container {
     left: 50%;
-    top: 65%;
-    width: 100vw;
+    top: 68%;
     height: 70vh;
   }
   .login-form {
-    margin-top: 25%;
-  }
-}
-@media (max-width: 380px) {
-  .textaside h2 {
-    font-size: 20px;
-  }
-  .textaside {
-    margin-top: 25px;
-  }
-}
-@media (max-width: 344px) {
-  .textaside h2 {
-    font-size: 21px;
+    margin-top: 5%;
+    height: 100vh;
   }
 }
 
@@ -175,5 +162,19 @@ a {
   }
   .login-form {
     margin-top: 50%;
+  }
+}
+
+@media (max-width: 380px) {
+  .textaside h2 {
+    font-size: 20px;
+  }
+  .textaside {
+    margin-top: 25px;
+  }
+}
+@media (max-width: 344px) {
+  .textaside h2 {
+    font-size: 21px;
   }
 }

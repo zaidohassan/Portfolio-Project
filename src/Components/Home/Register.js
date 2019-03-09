@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
-import "./Register.css";
 import axios from "axios";
 
 export default class Register extends Component {
@@ -26,7 +25,7 @@ export default class Register extends Component {
       .post("/auth/register", { username, password, email })
       .then(register => {
         console.log(register.data);
-
+        this.props.history.push("/Dashboard");
         this.setState({
           username: "",
           password: "",

@@ -7,7 +7,7 @@ module.exports = {
 
     try {
       db.findUser([username]).then(async users => {
-        console.log(users[0]);
+        console.log("res", users[0]);
 
         if (!users[0]) {
           res.status(401).json({ error: "no users found" });
