@@ -78,7 +78,7 @@ export default class Register extends Component {
                   onChange={this.updateInput}
                 />
                 <button className="loginbutton" type="submit">
-                  Hello
+                  Register
                 </button>
               </form>
             </div>

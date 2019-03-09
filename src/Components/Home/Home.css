@@ -41,7 +41,6 @@ section {
 }
 
 .login-form {
-  position: relative;
   box-sizing: border-box;
   padding: 60px 30px;
   transition: 0.5s;
@@ -111,6 +110,7 @@ a {
   .entireapp {
     display: flex;
     flex-direction: column;
+    height: 100%;
   }
   .aside {
     width: 100%;
@@ -127,12 +127,10 @@ a {
 
   section {
     width: 100%;
-    height: 70vh;
   }
   .container {
     left: 50%;
-    top: 85%;
-    height: 70vh;
+    top: 100%;
   }
   .login-form {
     padding-bottom: 70px;
