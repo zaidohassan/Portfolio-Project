@@ -91,7 +91,7 @@ export default class Home extends Component {
                   required
                 />
                 <button className="loginbutton" onClick={this.login}>
-                  Hello
+                  LogIn
                 </button>
               </form>
             </div>
