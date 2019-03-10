@@ -12,8 +12,9 @@ body {
 section {
   background-image: linear-gradient(to right, #ff5722, #ff9800);
   width: 70%;
-  height: 100vh;
   background-size: cover;
+  display: flex;
+  align-items: center;
 }
 
 .aside {
@@ -33,11 +34,8 @@ section {
 }
 
 .container {
-  position: absolute;
-  top: 45%;
-  left: 58%;
-  transform: translate(-50%, -50%);
   width: 340px;
+  margin-left: 50px;
 }
 
 .login-form {
@@ -127,10 +125,12 @@ a {
 
   section {
     width: 100%;
+    flex-direction: column;
   }
   .container {
     left: 50%;
     top: 100%;
+    margin-left: 0px;
   }
   .login-form {
     padding-bottom: 70px;

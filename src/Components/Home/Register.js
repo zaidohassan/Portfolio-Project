@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
 import axios from "axios";
+import Reviews from "./Reviews";
 
 export default class Register extends Component {
   constructor() {
@@ -83,6 +84,7 @@ export default class Register extends Component {
               </form>
             </div>
           </div>
+          <Reviews />
         </section>
       </div>
     );

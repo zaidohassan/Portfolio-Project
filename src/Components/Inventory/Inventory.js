@@ -55,7 +55,6 @@ class Inventory extends Component {
   componentDidMount() {
     const { todaysDate } = this.state;
     axios.post("/api/getTodaysBooks", { todaysDate }).then(response => {
-      console.log(response.data);
       this.setState({ inventoryList: response.data });
     });
   }

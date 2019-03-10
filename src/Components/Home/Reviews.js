@@ -1,129 +1,53 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Chip from "@material-ui/core/Chip";
-import Avatar from "@material-ui/core/Avatar";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import Collapse from "@material-ui/core/Collapse";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import IconButton from "@material-ui/core/IconButton";
-import classnames from "classnames";
 import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import Avatar from "@material-ui/core/Avatar";
+import "./Reviews.css";
 
-const styles = theme => ({
-  root: {
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap"
-  },
-  chip: {
-    margin: theme.spacing.unit
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest
-    })
-  },
-  expandOpen: {
-    transform: "rotate(180deg)",
-    marginTop: 200
-  },
-  width: {
-    width: 400,
-    marginTop: 50
-  }
-});
-
-class Reviews extends Component {
-  constructor() {
-    super();
-    this.state = {
-      expanded: false
-    };
-  }
-  handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }));
-  };
-
-  render() {
-    const { classes } = this.props;
-    return (
-      <div>
-        <h1>Testimonials </h1>
-        <div className={classes.root}>
-          <Chip
-            avatar={<Avatar>MB</Avatar>}
-            label={
-              <div>
-                ClickAble Link
-                <IconButton
-                  className={classnames(classes.expand, {
-                    [classes.expandOpen]: this.state.expanded
-                  })}
-                  onClick={this.handleExpandClick}
-                  aria-expanded={this.state.expanded}
-                  aria-label="Show more"
-                >
-                  <ExpandMoreIcon />
-                </IconButton>
-                <Collapse
-                  in={this.state.expanded}
-                  timeout="auto"
-                  unmountOnExit
-                  className={classes.width}
-                >
-                  <Card>
-                    <CardContent>
-                      <Typography paragraph>Method:</Typography>
-                      <Typography paragraph>
-                        Heat 1/2 cup of the broth in a pot until simmering, add
-                        saffron and set aside for 10 minutes.
-                      </Typography>
-                      <Typography paragraph>
-                        Heat oil in a (14- to 16-inch) paella pan or a large,
-                        deep skillet over medium-high heat. Add chicken, shrimp
-                        and chorizo, and cook, stirring occasionally until
-                        lightly browned, 6 to 8 minutes. Transfer shrimp to a
-                        large plate and set aside, leaving chicken and chorizo
-                        in the pan. Add pimentón, bay leaves, garlic, tomatoes,
-                        onion, salt and pepper, and cook, stirring often until
-                        thickened and fragrant, about 10 minutes. Add saffron
-                        broth and remaining 4 1/2 cups chicken broth; bring to a
-                        boil.
-                      </Typography>
-                      <Typography paragraph>
-                        Add rice and stir very gently to distribute. Top with
-                        artichokes and peppers, and cook without stirring, until
-                        most of the liquid is absorbed, 15 to 18 minutes. Reduce
-                        heat to medium-low, add reserved shrimp and mussels,
-                        tucking them down into the rice, and cook again without
-                        stirring, until mussels have opened and rice is just
-                        tender, 5 to 7 minutes more. (Discard any mussels that
-                        don’t open.)
-                      </Typography>
-                      <Typography>
-                        Set aside off of the heat to let rest for 10 minutes,
-                        and then serve.
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Collapse>
-              </div>
-            }
-            className={classes.chip}
-            Hello
-          />
-        </div>
-      </div>
-    );
-  }
-}
-
-Reviews.propTypes = {
-  classes: PropTypes.object.isRequired
+const Reviews = () => {
+  return (
+    <div className="reviewContainer animated fadeInUpBig">
+      <Card className="card animated bounceInUp">
+        <CardHeader
+          avatar={
+            <Avatar
+              aria-label="Recipe"
+              src="https://images.unsplash.com/photo-1542178243-bc20204b769f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80"
+            />
+          }
+          title="Nothing like out there"
+          subheader="Lorem ipsum dolor sit amet, his ea meliore tibique, equidem electram erroribus ne usu, id quem facer mucius sea. Et fugit munere timeam mel. Cu mutat percipitur philosophia vel, usu falli erant necessitatibus ne."
+          className="eachCard"
+        />
+      </Card>
+      <Card className="card animated bounceInUp">
+        <CardHeader
+          avatar={
+            <Avatar
+              aria-label="Recipe"
+              src="https://images.unsplash.com/photo-1495147334217-fcb3445babd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80"
+            />
+          }
+          title="Holy! This app escalated my book business by ten fold"
+          subheader="Mutat iusto epicuri id eam, simul postea invenire duo in. Quot urbanitas consequuntur est in. Phaedrum ocurreret delicatissimi et ius, qui duis delicatissimi ei."
+          className="eachCard"
+        />
+      </Card>
+      <Card className="card animated bounceInUp">
+        <CardHeader
+          avatar={
+            <Avatar
+              aria-label="Recipe"
+              src="https://images.unsplash.com/photo-1529008475023-5d5271a6fe50?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1055&q=80"
+            />
+          }
+          title="Best Book Scanning App out there in the Market!"
+          subheader="Ne brute facer mei, no vide persequeris his"
+          className="eachCard"
+        />
+      </Card>
+    </div>
+  );
 };
 
-export default withStyles(styles)(Reviews);
+export default Reviews;

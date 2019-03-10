@@ -1,0 +1,21 @@
+.reviewContainer {
+  max-width: 400px;
+  margin-left: 100px;
+  animation-duration: 1s;
+}
+
+.card {
+  max-width: 400px;
+  margin: 20px;
+  animation-duration: 3s;
+}
+
+.eachCard {
+  margin: 20px;
+}
+
+@media (max-width: 700px) {
+  .reviewContainer {
+    margin-left: 0px;
+  }
+}

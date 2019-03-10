@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Home.css";
+import Reviews from "./Reviews";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -42,6 +43,7 @@ export default class Home extends Component {
 
   render() {
     const { username, password } = this.state;
+    const { classes } = this.props;
     return (
       <div className="entireapp">
         <ToastContainer
@@ -94,6 +96,7 @@ export default class Home extends Component {
               </form>
             </div>
           </div>
+          <Reviews />
         </section>
       </div>
     );
