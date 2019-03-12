@@ -19,3 +19,9 @@
     margin-left: 0px;
   }
 }
+
+@media (min-width: 701px) and (max-width: 1200px) {
+  .reviewContainer {
+    margin: 0;
+  }
+}
